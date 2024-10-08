@@ -92,7 +92,7 @@ After creating the database and user, we'll configure ABP to connect to this dat
 ### Updating the Database with the Initial Migration
 Before running the project, you need to ensure that the database is up to date by applying the initial migration.
 
-### Running the HTTP.Host API
+### Running the HttpApi.Host
 Next, start the backend API by running the `HttpApi.Host` project. This will ensure that the API is available to communicate with the frontend.
 
 
