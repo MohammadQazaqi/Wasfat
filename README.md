@@ -114,7 +114,7 @@ ng serve -o
 - `ng serve`: Starts a development server for the Angular app.
 - `-o`: Opens the app automatically in the default browser.
 
-### Troubleshooting an ng serve problem 
+#### Troubleshooting an ng serve problem 
 we used ChatGpt to troubleshoot angular serving problem problem and we got this command
 
 ```ps
