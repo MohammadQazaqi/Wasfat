@@ -90,5 +90,13 @@ public class WasfatDbContext :
         //    b.ConfigureByConvention(); //auto configure for the base class props
         //    //...
         //});
+
+        builder.Entity<Recipe>(b =>
+        {
+            b.ToTable(WasfatConsts.DbTablePrefix + "Recipes", WasfatConsts.DbSchema);
+            b.ConfigureByConvention(); //auto configure for the base class props
+
+        });
+
     }
 }
