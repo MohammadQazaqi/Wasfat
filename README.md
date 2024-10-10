@@ -7,7 +7,7 @@
 ### 01.02 - What You Need to Know
 
 ## 02 - Setting Up the Development Environment
-### 02.01 - Intro: Setting Up the Development Environment
+### 02.01 - Introduction
 ### 02.02 - Installing Node
 - Node version: **20.18.0**
 ### 02.03 - Installing Visual Studio
@@ -31,7 +31,7 @@ npm install -g @angular/cli@16.2.16
 
 ## 03 - Creating Our ABP Project
 
-### 03.01 - Intro
+### 03.01 - Introduction
 In this chapter, you will learn how to create your first ABP project using the ABP CLI. We will also cover setting up a GitHub repository to manage your project, cloning it locally, and configuring the project for development.
 
 ### 03.02 - Creating Our GitHub Repository
@@ -70,7 +70,7 @@ In this chapter, we successfully set up our GitHub repository, cloned it, and cr
 
 ## 04 - Running Our Wasfat ABP Project
 
-### 04.01 - Intro
+### 04.01 - Introduction
 In this chapter, we will walk through the steps necessary to run the Wasfat ABP project. This includes starting the Database Server, creating the Database and the Database User, updating the database, starting the backend API, installing the frontend dependencies, generating API proxies, and serving the Angular app. By the end of this chapter, your project should be fully functional on both the backend and frontend.
 
 ### 04.02 - Starting the Database Server
