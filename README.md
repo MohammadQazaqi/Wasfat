@@ -86,7 +86,7 @@ In this video, we will walk through how to create a new MySQL database and user.
 After creating the database and user, we'll configure ABP to connect to this database by updating the `appsettings.json` file.
 ```
 "ConnectionStrings": {
-  "Default": "Server=localhost;Port=3306;Database=tasty-bites;Uid=tasty-bites-db-user;Pwd=P@ssw0rd!;"
+  "Default": "Server=localhost;Port=3306;Database=dataBase-name;Uid=dataBase-user-name;Pwd=SecretPassword;"
 },
 ```
 
@@ -126,9 +126,6 @@ npm install bootstrap-icons
 In this chapter, we successfully started the database server, created the database and user, configured ABP to connect to the database, updated the database schema, ran the backend API, installed frontend dependencies, and served the Angular app. Your Wasfat project is now fully operational and ready for development and testing!
 
 
-
-
-
 ## 04 - Building Backend CRUD Endpoints for Recipes
 
 ### 04.01 - What We Will Build in This Chapter
@@ -141,7 +138,6 @@ In order to understand this chapter, it's important to familiarize ourselves wit
 - **`Entity`**: A class that represents a data model in the application. It corresponds to a table in the database and typically has properties that map to columns in that table. For example, a `Recipe` entity might have properties like `Name` and `Description`, which would be represented as columns in a `Recipes` table in the database.
 - **`EntityDTO (Data Transfer Object)`**: An object used to transfer data between different layers of an application, such as from the backend to the frontend, without exposing the entire entity.
 - **`Mapping`**: The process of converting data from one format to another, such as from an entity to a DTO or vice versa.
-- **`ReverseMap`**: A method in AutoMapper used to configure bidirectional mapping between two types, allowing data to be converted back and forth.
 - **`CRUD`**: An acronym for Create, Read, Update, Delete, which are the basic operations for managing data in an application.
 to the database.
 - **`Migration`**: A way to version control changes to the database schema, such as creating or altering tables and columns.
@@ -159,7 +155,8 @@ To start, we will define our entity class, which represents the data structure w
     }
 ```
 
-### 04.04 - Updating the DbContext
+### 04.04 - Adding the Recipe Entity to the DbContext
+
 Next, we need to update our `WasfatDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
 
 Add the following line to your `WasfatDbContext` class public properties:
@@ -168,6 +165,7 @@ Add the following line to your `WasfatDbContext` class public properties:
 public DbSet<Recipe> Recipes { get; set; }
 ```
 
+### 04.05 - Mapping the Recipe Entity to a Database Table
 Then, configure the entity within the `OnModelCreating` method:
 
 ```csharp
@@ -180,7 +178,8 @@ Then, configure the entity within the `OnModelCreating` method:
         });
 ```
 
-### 04.05 - Creating a Migration
+
+### 04.06 - Adding a Migration
 After updating the `DbContext`, we need to create a new migration to apply the changes to the database. This step will generate the necessary scripts to update the database schema.
 
 ```bash
@@ -188,14 +187,14 @@ Add-Migration CreateRecipesTable
 
 ```
 
-### 04.06 - Applying the Migration
+### 04.07 - Applying the Migration
 Once the migration has been created, the next step is to update the database to apply the migration. This will modify the database schema based on the changes defined in the migration.
 
 ```bash
 Update-Database
 ```
 
-### 04.07 - Creating the Data Transfer Object (DTO)
+### 04.08 - Creating the Data Transfer Object (DTO)
 DTOs are used to transfer data between the application layers. In this section, we will create DTOs for the entity to be used in service methods.
 
 ```csharp
@@ -206,7 +205,7 @@ DTOs are used to transfer data between the application layers. In this section, 
     }
 ```
 
-### 04.08 - Setting Up the Mapper Profile
+### 04.09 - Setting Up the Mapper Profile
 To map between the entity and its DTO, we need to create a `MapperProfile`. This profile will handle the conversion between the entity and its corresponding DTOs.
 
 ```bash
@@ -219,7 +218,7 @@ To map between the entity and its DTO, we need to create a `MapperProfile`. This
     }
 ```
 
-### 04.09 - Defining the Service Interface
+### 04.10 - Defining the Service Interface
 The service interface defines the contract for our service, specifying which operations are available. Here, we will implement the `ICrudAppService` interface to provide basic CRUD functionality.
 
 ```csharp
@@ -231,7 +230,7 @@ The service interface defines the contract for our service, specifying which ope
     }
 ```
 
-### 04.10 - Implementing the Service
+### 04.11 - Implementing the Service
 The service class will implement the CRUD operations defined in the service interface. We will extend the `CrudAppService` base class, which provides default implementations for common CRUD operations.
 
 ```csharp
@@ -247,11 +246,8 @@ The service class will implement the CRUD operations defined in the service inte
     }
 ```
 
-### 04.11 - Understanding Service vs. Service Interface
-A service interface defines the contract (methods) that a service class must implement, while the service class provides the actual implementation of these methods, handling the business logic. The interface allows for flexibility, enabling different implementations of the service.
-
 ### 04.12 - Exploring the API with Swagger
 Once the service is implemented, we can use Swagger to explore the generated API and interact with our newly created CRUD operations. This section will guide you through testing the API endpoints using the Swagger UI.
 
-### 04.12 - Summary
+### 04.13 - Summary
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
