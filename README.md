@@ -138,25 +138,29 @@ In order to understand this chapter, it's important to familiarize ourselves wit
 - **`Entity`**: A class that represents a data model in the application. It corresponds to a table in the database and typically has properties that map to columns in that table. For example, a `Recipe` entity might have properties like `Name` and `Description`, which would be represented as columns in a `Recipes` table in the database.
 - **`EntityDTO (Data Transfer Object)`**: An object used to transfer data between different layers of an application, such as from the backend to the frontend, without exposing the entire entity.
 - **`Mapping`**: The process of converting data from one format to another, such as from an entity to a DTO or vice versa.
-- **`CRUD`**: An acronym for Create, Read, Update, Delete, which are the basic operations for managing data in an application.
 - **`Migration`**: A way to version control changes to the database schema, such as creating or altering tables and columns.
+- **`API`**: An acronym for Application Programming Interface, which provides a set of functions and protocols to allow applications to 
 - **`Swagger`**: An open-source tool used for documenting and testing RESTful APIs, providing a user interface to interact with the endpoints.
 
 ### 04.03 - Creating the Entity Class
 To start, we will define our entity class, which represents the data structure we want to manage in our application. The entity will include basic properties such as `Name` and `Description`.
 
+Location:  
+`src`\\`Wasfat.Domain`\\`Recipes`\\`Recipe.cs`:
+
 ```csharp
-    public class Recipe : Entity<int>
-    {
-        public string Name { get; set; }
-        public string Description { get; set; } 
-    }
+public class Recipe : Entity<int>
+{
+    public string Name { get; set; }
+    public string Description { get; set; } 
+}
 ```
 
 ### 04.04 - Adding the Recipe Entity to the DbContext
 Next, we need to update our `WasfatDbContext` class to include the new entity. This will allow ABP to manage the entity in the database.
 
-Add the following line to your `WasfatDbContext` class public properties:
+Location:  
+`src`\\`Wasfat.EntityFrameworkCore`\\`EntityFrameworkCore`\\`WasfatDbContext.cs`:
 
 ```csharp
 public DbSet<Recipe> Recipes { get; set; }
@@ -165,17 +169,22 @@ public DbSet<Recipe> Recipes { get; set; }
 ### 04.05 - Mapping the Recipe Entity to a Database Table
 Then, configure the entity within the `OnModelCreating` method:
 
+Location:  
+`src`\\`Wasfat.EntityFrameworkCore`\\`EntityFrameworkCore`\\`WasfatDbContext.cs`:
+
 ```csharp
-        builder.Entity<Recipe>(b =>
-        {
-            b.ToTable(WasfatConsts.DbTablePrefix + "Recipes",
-                WasfatConsts.DbSchema);
-            b.ConfigureByConvention();
-        });
+builder.Entity<Recipe>(b =>
+{
+    b.ToTable(WasfatConsts.DbTablePrefix + "Recipes",
+        WasfatConsts.DbSchema);
+    b.ConfigureByConvention();
+});
 ```
 
 ### 04.06 - Adding a Migration
 After updating the `DbContext`, we need to create a new migration to apply the changes to the database. This step will generate the necessary scripts to update the database schema.
+
+Open the **Package Manager Console** and set the **Default project** to `src`\\`Wasfat.EntityFrameworkCore`. Then, run the following command:
 
 ```bash
 Add-Migration CreateRecipesTable
@@ -184,6 +193,8 @@ Add-Migration CreateRecipesTable
 ### 04.07 - Applying the Migration
 Once the migration has been created, the next step is to update the database to apply the migration. This will modify the database schema based on the changes defined in the migration.
 
+In the **Package Manager Console**, with the **Default project** still set to `src`\\`Wasfat.EntityFrameworkCore`, run the following command:
+
 ```bash
 Update-Database
 ```
@@ -191,53 +202,65 @@ Update-Database
 ### 04.08 - Creating the Data Transfer Object (DTO)
 DTOs are used to transfer data between the application layers. In this section, we will create DTOs for the entity to be used in service methods.
 
+Location:  
+`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`RecipeDto.cs`:
+
 ```csharp
-    public class RecipeDto : EntityDto<int>
-    {
-        public string Name { get; set; }
-        public string Description { get; set; } 
-    }
+public class RecipeDto : EntityDto<int>
+{
+    public string Name { get; set; }
+    public string Description { get; set; } 
+}
 ```
 
 ### 04.09 - Setting Up the Mapper Profile
 To map between the entity and its DTO, we need to create a `MapperProfile`. This profile will handle the conversion between the entity and its corresponding DTOs.
 
+Location:  
+`src`\\`Wasfat.Application`\\`Recipes`\\`RecipeMapperProfile.cs`:
+
 ```csharp
-    public class RecipeMapperProfile : Profile
+public class RecipeMapperProfile : Profile
+{
+    public RecipeMapperProfile()
     {
-        public RecipeMapperProfile()
-        {
-            CreateMap<Recipe, RecipeDto>().ReverseMap();
-        }
+        CreateMap<Recipe, RecipeDto>().ReverseMap();
     }
+}
 ```
 
 ### 04.10 - Defining the Service Interface
 The service interface defines the contract for our service, specifying which operations are available. Here, we will implement the `ICrudAppService` interface to provide basic CRUD functionality.
 
+Location:  
+`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
+
 ```csharp
-    public interface IRecipeAppService : ICrudAppService<
-             RecipeDto,
-             int,
-             PagedAndSortedResultRequestDto>
-    {
-    }
+public interface IRecipeAppService : ICrudAppService<
+         RecipeDto,
+         int,
+         PagedAndSortedResultRequestDto>
+{
+}
 ```
 
 ### 04.11 - Implementing the Service
 The service class will implement the CRUD operations defined in the service interface. We will extend the `CrudAppService` base class, which provides default implementations for common CRUD operations.
 
-```csharp
-    public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
-    {
-        public RecipeAdminAppService(
-            IRepository<Recipe, int> repository
-            )
-        : base(repository)
-        {
+Location:  
+`src`\\`Wasfat.Application`\\`Recipes`\\`RecipeAdminAppService.cs`:
 
-        }
+```csharp
+public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
+{
+    public RecipeAdminAppService(
+        IRepository<Recipe, int> repository
+        )
+    : base(repository)
+    {
+
     }
+}
 ```
 
 ### 04.12 - Exploring the API with Swagger
