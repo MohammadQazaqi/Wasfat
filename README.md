@@ -2,10 +2,12 @@
 
 # Mastering Full-Stack Development with ABP.io
 
+***
 ## 01 - Introduction
 ### 01.01 - What You Will Learn in This Course
 ### 01.02 - What You Need to Know
 
+***
 ## 02 - Setting Up the Development Environment
 ### 02.01 - Introduction
 ### 02.02 - Installing Node
@@ -29,6 +31,7 @@ npm install -g @angular/cli@16.2.16
 - Make sure to configure it to run as administrator
 ### 02.08 - Summary: Setting Up the Development Environment
 
+***
 ## 03 - Creating Our ABP Project
 
 ### 03.01 - Introduction
@@ -68,6 +71,7 @@ abp new Wasfat -u angular -dbms MySQL -m none --theme basic --pwa  -csf --versio
 ### 03.05 - Summary
 In this chapter, we successfully set up our GitHub repository, cloned it, and created our first ABP project. You are now ready to start building your full-stack application using ABP.io!
 
+***
 ## 04 - Running Our Wasfat ABP Project
 
 ### 04.01 - Introduction
@@ -120,6 +124,8 @@ npm install bootstrap-icons
 ### 04.10 - Summary
 In this chapter, we successfully started the database server, created the database and user, configured ABP to connect to the database, updated the database schema, ran the backend API, installed frontend dependencies, and served the Angular app. Your Wasfat project is now fully operational and ready for development and testing!
 
+
+***
 ## 05 - Building Backend CRUD Endpoints for Recipes
 
 ### 05.01 - What We Will Build in This Chapter
