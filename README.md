@@ -434,9 +434,22 @@ public override async Task DeleteAsync(int id)
 }
 ```
 
+Here's the revised version with the mention of adding the new custom method to the interface:
+
+---
+
 ### 05.08 - Creating a Custom Read Operation - Get All Recipes
 
-Here, we override the `GetAllRecipesAsync` method to retrieve a list of all recipes.
+Before implementing the `GetAllRecipesAsync` method, you need to declare it in the service interface. This will allow the service to expose the new method.
+
+**Location:**
+`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
+
+```csharp
+Task<List<RecipeDto>> GetAllRecipesAsync();
+```
+
+Now, we will implement the `GetAllRecipesAsync` method to retrieve a list of all recipes.
 
 ```csharp
 public async Task<List<RecipeDto>> GetAllRecipesAsync()
@@ -451,6 +464,7 @@ public async Task<List<RecipeDto>> GetAllRecipesAsync()
     return recipeDtos;
 }
 ```
+
 
 ### 05.09 - Overriding the Read Operation - Paged List
 Finally, we override the `GetListAsync` method to retrieve a paginated list of recipes.
