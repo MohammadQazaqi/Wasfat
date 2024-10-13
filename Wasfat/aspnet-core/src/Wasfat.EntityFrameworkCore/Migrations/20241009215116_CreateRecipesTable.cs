@@ -12,7 +12,7 @@ namespace Wasfat.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "wsf_Recipes",
+                name: "AppRecipes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)

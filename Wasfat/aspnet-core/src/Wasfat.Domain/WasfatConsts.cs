@@ -2,7 +2,7 @@
 
 public static class WasfatConsts
 {
-    public const string DbTablePrefix = "wsf_";
+    public const string DbTablePrefix = "App";
 
     public const string DbSchema = null;
 }
