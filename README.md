@@ -344,9 +344,9 @@ public override async Task<RecipeDto> CreateAsync(RecipeDto input)
 
     await Repository.InsertAsync(recipe, autoSave: true);
 
-    var output = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
-    return output;
+    return recipeDto;
 }
 ```
 
