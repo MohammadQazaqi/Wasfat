@@ -268,3 +268,216 @@ Once the service is implemented, we can use Swagger to explore the generated API
 
 ### 04.13 - Summary
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
+
+***
+## 05 - Customizing The Crud Operations
+
+### 05.01 - What You Will Learn in This Chapter
+In this chapter, we will explore how to override the default CRUD operations provided by ABP.io. We'll customize each operation, including the ability to create, read, update, and delete recipes, to suit specific requirements. We will also cover how to import sample data, modify table prefixes, and handle paging in list results.
+
+### 05.02 - Terminology
+Before diving into the code, let's review some important terms that will be useful throughout this chapter.
+
+- **`Repository`**: thinks about it as a middleman that handles the communication between the app and the database, making it easier to retrieve or save data without directly interacting with the database.
+
+- **`Pagination`**: A way to show a small part of the data, like displaying a few recipes at a time on a page, while also knowing how many total recipes there are.
+
+### 05.03 - Importing Sample Data 
+
+**⚠️ Before you import:**
+> If your table prefix differs from the one used in these video tutorials and you want to follow along, you can update the table prefix. However, it is not common practice to change the table prefix after applying the first migration.
+
+**Location:**
+`src`\\`Wasfat.Domain`\\`WasfatConsts.cs`:
+
+```csharp
+public static class WasfatConsts
+{
+    public const string DbTablePrefix = "App"; // Original tables prefix  value
+    public const string DbTablePrefix = "customPrefix_"; // updated Table prefix
+    public const string DbSchema = null;
+}
+
+```
+
+**Location:**
+`src`\\`Wasfat.EntityFrameworkCore`\\`Migrations`\\`20241009215116_CreateRecipesTable.cs`:
+
+```csharp
+protected override void Up(MigrationBuilder migrationBuilder)
+{
+    migrationBuilder.CreateTable(
+        name: "customPrefix_Recipes",  // Change from "AppRecipes" to "wsf_Recipes"
+        columns: table => new
+        {
+            Id = table.Column<int>(type: "int", nullable: false),
+            ...
+        });
+}
+```
+
+
+This is how sample data was imported during the video session.
+
+**Exporting the Data**:
+1. Go to **phpMyAdmin**.
+2. Select the **database**.
+3. Search for the **Recipes** table.
+4. Click the **Export** tab at the top menu.
+5. Click **Export** at the bottom of the page.
+
+You can download the sample file from the GitHub repo at:  
+`Wasfat`\\`Sample Data Files`\\`Chapter 05`\\`customPrefix_recipes.sql`:  
+
+**⚠️ Note :** 
+> customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
+
+
+tThis is how to Import the Sample Data Provided in This Course:
+
+**Importing the Data**:
+1. Go to **phpMyAdmin**.
+2. Select the **database**.
+3. Click the **Import** tab at the top menu.
+4. Choose the sample data file (`customPrefix_recipes.sql`).
+5. Scroll to the bottom and click **Import**.
+
+
+**⚠️ Note :** 
+> customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
+
+### 05.04 - Overriding the Read Operation - Get Single Recipe
+We will now override the `GetAsync` method to add custom logic when retrieving a single recipe.
+
+```csharp
+public override async Task<RecipeDto> GetAsync(int id)
+{
+    var recipe = await Repository.GetAsync(id);
+
+    // Custom logic (optional)
+    recipe.Name = recipe.Name.Trim();
+    recipe.Description = recipe.Description.Trim();
+
+    // Map the recipe entity back to the RecipeDto and return it
+    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+    return recipeDto;
+}
+```
+
+### 05.05 - Overriding the Create Operation
+Next, we'll override the `CreateAsync` method to add custom logic before saving a new recipe.
+
+```csharp
+public override async Task<RecipeDto> CreateAsync(RecipeDto input)
+{
+    var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
+
+    // Custom logic
+    recipe.Name = recipe.Name.Trim();
+    recipe.Description = recipe.Description.Trim();
+
+    await Repository.InsertAsync(recipe, autoSave: true);
+
+    var output = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+    return output;
+}
+```
+
+### 05.06 - Overriding the Update Operation
+We'll override the `UpdateAsync` method to add custom logic when updating a recipe.
+
+```csharp
+public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
+{
+    // Retrieve the existing recipe by its ID
+    var recipe = await Repository.GetAsync(id);
+
+    // Map updated values from the input DTO to the existing recipe entity,
+    // IMPORTANT: PRESERVING ITS CURRENT STATE in recipe
+    ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
+   
+    // Save the changes to the repository
+    await Repository.UpdateAsync(recipe, autoSave: true);
+
+    // Map the updated recipe back to RecipeDto
+    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+    return recipeDto;
+}
+```
+
+**⛔ Warning:**  
+Avoid the following approach, as it assigns the input directly to `recipe` and can result in loss of the original recipe state:
+
+> **Incorrect**: Assigning `input` to `recipe` directly  
+> `recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);`
+
+
+### 05.07 - Overriding the Delete Operation
+We'll override the `DeleteAsync` method to add any custom logic before deleting a recipe.
+
+```csharp
+public override async Task DeleteAsync(int id)
+{
+    // Retrieve the recipe by its ID
+    var recipe = await Repository.GetAsync(id);
+
+    // Check if the recipe's name contains "Mansaf" and prevent deletion
+    if (recipe.Name.Contains("Mansaf", StringComparison.OrdinalIgnoreCase))
+    {
+        throw new UserFriendlyException("Recipes containing 'Mansaf' cannot be deleted!");
+    }
+
+    // Proceed with deletion for other recipes
+    await Repository.DeleteAsync(id);
+}
+```
+
+### 05.08 - Creating a Custom Read Operation - Get All Recipes
+
+Here, we override the `GetAllRecipesAsync` method to retrieve a list of all recipes.
+
+```csharp
+public async Task<List<RecipeDto>> GetAllRecipesAsync()
+{
+    // Step 1: Get all recipes from the repository.
+    var recipes = await Repository.GetListAsync();
+
+    // Step 2: Map the Recipe entities to RecipeDto.
+    var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+    // Step 3: Return the list of RecipeDto.
+    return recipeDtos;
+}
+```
+
+### 05.09 - Overriding the Read Operation - Paged List
+Finally, we override the `GetListAsync` method to retrieve a paginated list of recipes.
+
+```csharp
+public override async Task<PagedResultDto<RecipeDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+{
+    // Step 1: Get total count of recipes.
+    var totalCount = await Repository.GetCountAsync();
+
+    // Step 2: Get a list of recipes with sorting and paging applied.
+    var recipes = await Repository.GetPagedListAsync(
+        input.SkipCount,        // How many records to skip (for paging)
+        input.MaxResultCount,   // How many records to take (for paging)
+        input.Sorting ?? nameof(Recipe.Name) // Sort by Name if no sorting provided
+    );
+
+    // Step 3: Convert the recipe entities to RecipeDto.
+    var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+    // Step 4: Return the paged result.
+    return new PagedResultDto<RecipeDto>(
+        totalCount,    // The total number of items
+        recipeDtos     // The actual paged result (current page)
+    );
+}
+```
+
+### 05.10 - Summary
+In this chapter, we successfully customized each CRUD operation in ABP.io for managing recipes. We learned how to override the default CRUD operations to implement specific business logic, how to modify the table prefix, and how to import sample data. These steps give you full control over your application's behavior when interacting with the database.
