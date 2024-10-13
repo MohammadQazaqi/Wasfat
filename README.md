@@ -278,7 +278,7 @@ In this chapter, we will explore how to override the default CRUD operations pro
 ### 05.02 - Terminology
 Before diving into the code, let's review some important terms that will be useful throughout this chapter.
 
-- **`Repository`**: thinks about it as a middleman that handles the communication between the app and the database, making it easier to retrieve or save data without directly interacting with the database.
+- **`Repository`**: A repository is an abstraction layer that provides a standardized interface for interacting with the database. Thinks about it as a middleman that handles the communication between the app and the database, making it easier to retrieve or save data without directly interacting with the database.
 
 - **`Pagination`**: A way to show a small part of the data, like displaying a few recipes at a time on a page, while also knowing how many total recipes there are.
 
