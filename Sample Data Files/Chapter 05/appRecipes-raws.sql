@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 13, 2024 at 10:34 AM
+-- Generation Time: Oct 13, 2024 at 09:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,20 +24,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wsf_recipes`
+-- Table structure for table `apprecipes`
 --
 
-CREATE TABLE `wsf_recipes` (
+CREATE TABLE `apprecipes` (
   `Id` int(11) NOT NULL,
   `Name` longtext NOT NULL,
   `Description` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `wsf_recipes`
+-- Dumping data for table `apprecipes`
 --
 
-INSERT INTO `wsf_recipes` (`Id`, `Name`, `Description`) VALUES
+INSERT INTO `apprecipes` (`Id`, `Name`, `Description`) VALUES
 (1, 'Falafel  ', 'Falafel is a popular Middle Eastern dish made from ground chickpeas or fava beans (or a combination of both) that are mixed with herbs, spices, and onions, then shaped into small balls or patties and deep-fried to crispy perfection. Known for its golden-brown crust and soft, flavorful interior, falafel is often served in pita bread or flatbreads, accompanied by fresh vegetables like tomatoes, cucumbers, and lettuce, and topped with tahini sauce or hummus. It is enjoyed as a vegetarian option and is a staple in Mediterranean cuisine.'),
 (2, 'Hummus', 'Hummus is a smooth and creamy Middle Eastern dip made from blended chickpeas, tahini (sesame seed paste), olive oil, lemon juice, garlic, and salt. This savory spread has a rich, nutty flavor with a hint of tanginess from the lemon and a touch of garlic. Hummus is traditionally served as a dip with pita bread or fresh vegetables but is also used as a spread in wraps, sandwiches, and salads. It\'s a healthy, plant-based option packed with protein, fiber, and healthy fats, making it a staple in Mediterranean and Middle Eastern cuisine.'),
 (3, 'Mansaf', 'Mansaf is a traditional Jordanian dish and a symbol of Jordanian hospitality, often served on special occasions. It consists of tender lamb cooked in a rich, tangy sauce made from fermented dried yogurt called \"jameed.\" The lamb is served over a large platter of rice, sometimes layered with thin flatbread, and generously topped with the jameed sauce. Mansaf is often garnished with toasted almonds or pine nuts and parsley for extra flavor and texture. Traditionally, it\'s eaten communally, with the right hand, making it not only a hearty meal but also a cultural experience.'),
@@ -57,9 +57,9 @@ INSERT INTO `wsf_recipes` (`Id`, `Name`, `Description`) VALUES
 --
 
 --
--- Indexes for table `wsf_recipes`
+-- Indexes for table `apprecipes`
 --
-ALTER TABLE `wsf_recipes`
+ALTER TABLE `apprecipes`
   ADD PRIMARY KEY (`Id`);
 
 --
@@ -67,10 +67,10 @@ ALTER TABLE `wsf_recipes`
 --
 
 --
--- AUTO_INCREMENT for table `wsf_recipes`
+-- AUTO_INCREMENT for table `apprecipes`
 --
-ALTER TABLE `wsf_recipes`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+ALTER TABLE `apprecipes`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
