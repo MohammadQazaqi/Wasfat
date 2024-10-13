@@ -284,40 +284,7 @@ Before diving into the code, let's review some important terms that will be usef
 
 ### 05.03 - Importing Sample Data 
 
-**⚠️ Before you import:**
-> If your table prefix differs from the one used in these video tutorials and you want to follow along, you can update the table prefix. However, it is not common practice to change the table prefix after applying the first migration.
-
-**Location:**
-`src`\\`Wasfat.Domain`\\`WasfatConsts.cs`:
-
-```csharp
-public static class WasfatConsts
-{
-    public const string DbTablePrefix = "App"; // Original tables prefix  value
-    public const string DbTablePrefix = "customPrefix_"; // updated Table prefix
-    public const string DbSchema = null;
-}
-
-```
-
-**Location:**
-`src`\\`Wasfat.EntityFrameworkCore`\\`Migrations`\\`20241009215116_CreateRecipesTable.cs`:
-
-```csharp
-protected override void Up(MigrationBuilder migrationBuilder)
-{
-    migrationBuilder.CreateTable(
-        name: "customPrefix_Recipes",  // Change from "AppRecipes" to "wsf_Recipes"
-        columns: table => new
-        {
-            Id = table.Column<int>(type: "int", nullable: false),
-            ...
-        });
-}
-```
-
-
-This is how sample data was imported during the video session.
+This is how sample data was exported during the video session.
 
 **Exporting the Data**:
 1. Go to **phpMyAdmin**.
@@ -333,7 +300,7 @@ You can download the sample file from the GitHub repo at:
 > customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
 
 
-tThis is how to Import the Sample Data Provided in This Course:
+This is how to Import the Sample Data Provided in This Course:
 
 **Importing the Data**:
 1. Go to **phpMyAdmin**.
@@ -356,7 +323,6 @@ public override async Task<RecipeDto> GetAsync(int id)
 
     // Custom logic (optional)
     recipe.Name = recipe.Name.Trim();
-    recipe.Description = recipe.Description.Trim();
 
     // Map the recipe entity back to the RecipeDto and return it
     var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
@@ -375,7 +341,6 @@ public override async Task<RecipeDto> CreateAsync(RecipeDto input)
 
     // Custom logic
     recipe.Name = recipe.Name.Trim();
-    recipe.Description = recipe.Description.Trim();
 
     await Repository.InsertAsync(recipe, autoSave: true);
 
