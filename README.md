@@ -1,4 +1,3 @@
-
 # Wasfat
 
 # Mastering Full-Stack Development with ABP.io
@@ -270,7 +269,7 @@ Once the service is implemented, we can use Swagger to explore the generated API
 In this chapter, we successfully created a new entity and implemented a complete CRUD functionality for it using ABP.io. We covered creating the entity class, updating the `DbContext`, creating and applying database migrations, setting up DTOs, implementing the service layer, and testing the API with Swagger. With these steps, you now have a foundational understanding of managing entities in a full-stack ABP application.
 
 ***
-## 05 - Customizing The Crud Operations
+## 05 - Customizing The CRUD Operations
 
 ### 05.01 - What You Will Learn in This Chapter
 In this chapter, we will explore how to override the default CRUD operations provided by ABP.io. We'll customize each operation, including the ability to create, read, update, and delete recipes, to suit specific requirements. We will also cover how to import sample data, modify table prefixes, and handle paging in list results.
@@ -313,63 +312,95 @@ This is how to Import the Sample Data Provided in This Course:
 **⚠️ Note :** 
 > customPrefix_ is the prefix configured above in  `public const string DbTablePrefix = "customPrefix_"; `
 
-### 05.04 - Overriding the Read Operation - Get Single Recipe
+
+### 05.04 - Renaming & Assigning the Injected Repository to a Private Field
+
+1. **Declare a private readonly field** to store the injected repository:
+
+```csharp
+private readonly IRepository<Recipe, int> _recipesRepository;
+```
+
+2. Assign the injected repository to the private field:
+
+```csharp
+public RecipeAdminAppService(IRepository<Recipe, int> recipesRepository)
+    : base(recipesRepository)
+{
+    _recipesRepository = recipesRepository;
+}
+```
+
+#### Full Example:
+
+```csharp
+public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
+{
+    private readonly IRepository<Recipe, int> _recipesRepository;
+
+    public RecipeAdminAppService(IRepository<Recipe, int> recipesRepository)
+        : base(recipesRepository)
+    {
+        this._recipesRepository = recipesRepository; 
+    }
+}
+```
+
+
+### 05.05 - Overriding the Read Operation - Get Single Recipe
 We will now override the `GetAsync` method to add custom logic when retrieving a single recipe.
 
 ```csharp
-public override async Task<RecipeDto> GetAsync(int id)
-{
-    var recipe = await Repository.GetAsync(id);
+        public override async Task<RecipeDto> GetAsync(int id)
+        {
+            var recipe = await _recipesRepository.GetAsync(id);
 
-    // Custom logic (optional)
-    recipe.Name = recipe.Name.Trim();
+            // custome logic
+            recipe.Name = recipe.Name.Trim();
 
-    // Map the recipe entity back to the RecipeDto and return it
-    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
-    return recipeDto;
-}
+            return recipeDto;
+        }
 ```
 
-### 05.05 - Overriding the Create Operation
+### 05.06 - Overriding the Create Operation
 Next, we'll override the `CreateAsync` method to add custom logic before saving a new recipe.
 
 ```csharp
-public override async Task<RecipeDto> CreateAsync(RecipeDto input)
-{
-    var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
+        public override async Task<RecipeDto> CreateAsync(RecipeDto input)
+        {
+            var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
 
-    // Custom logic
-    recipe.Name = recipe.Name.Trim();
+            // custom logic
+            recipe.Name = recipe.Name.Trim();
 
-    await Repository.InsertAsync(recipe, autoSave: true);
+            await _recipesRepository.InsertAsync(recipe, autoSave: true);
 
-    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
-    return recipeDto;
-}
+            return recipeDto;
+        }
 ```
 
-### 05.06 - Overriding the Update Operation
+### 05.07 - Overriding the Update Operation
 We'll override the `UpdateAsync` method to add custom logic when updating a recipe.
 
 ```csharp
-public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
-{
-    // Retrieve the existing recipe by its ID
-    var recipe = await Repository.GetAsync(id);
+        public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
+        {
+            var recipe = await _recipesRepository.GetAsync(id);
 
-    // Map updated values from the input DTO to the existing recipe entity,
-    // IMPORTANT: PRESERVING ITS CURRENT STATE in recipe
-    ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
-   
-    // Save the changes to the repository
-    await Repository.UpdateAsync(recipe, autoSave: true);
+            // Only the available values from the input DTO will be applied to the recipe entity.
+            // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
+            ObjectMapper.Map<RecipeDto, Recipe>(input,recipe);
 
-    // Map the updated recipe back to RecipeDto
-    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
-    return recipeDto;
-}
+            await _recipesRepository.UpdateAsync(recipe, autoSave: true);
+
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+            return recipeDto;
+        }
 ```
 
 **⛔ Warning:**  
@@ -379,25 +410,63 @@ Avoid the following approach, as it assigns the input directly to `recipe` and c
 > `recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);`
 
 
-### 05.07 - Overriding the Delete Operation
+### 05.08 - Overriding the Delete Operation
 We'll override the `DeleteAsync` method to add any custom logic before deleting a recipe.
 
 ```csharp
-public override async Task DeleteAsync(int id)
-{
-    // Retrieve the recipe by its ID
-    var recipe = await Repository.GetAsync(id);
+        public override async Task DeleteAsync(int id)
+        {
+            var recipe = await _recipesRepository.GetAsync(id);
 
-    // Check if the recipe's name contains "Mansaf" and prevent deletion
-    if (recipe.Name.Contains("Mansaf", StringComparison.OrdinalIgnoreCase))
-    {
-        throw new UserFriendlyException("Recipes containing 'Mansaf' cannot be deleted!");
-    }
+            // custom logic
+            if(recipe.Name.Contains("Shawarma", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new UserFriendlyException("you can not delete burgers");
+            }
 
-    // Proceed with deletion for other recipes
-    await Repository.DeleteAsync(id);
-}
+            await _recipesRepository.DeleteAsync(id);
+        }
 ```
 
-### 05.08 - Summary
-In this chapter, we successfully customized each CRUD operation in ABP.io for managing recipes. We learned how to override the default CRUD operations to implement specific business logic, how to modify the table prefix, and how to import sample data. These steps give you full control over your application's behavior when interacting with the database.
+### 05.09 - Overriding the Read Operation - Paged List
+We'll override the `GetListAsync` method to retrieve a paginated list of recipes.
+
+```csharp
+        public override async Task<PagedResultDto<RecipeDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        {
+            var totalCount = await _recipesRepository.GetCountAsync();
+
+            var recipes = await _recipesRepository.GetPagedListAsync(
+                input.SkipCount,
+                input.MaxResultCount,
+                input.Sorting ?? nameof(Recipe.Name)
+                );
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+            var pagedResultDto = new PagedResultDto<RecipeDto>(totalCount, recipeDtos);
+
+            return pagedResultDto;
+        }
+```
+
+### 05.10 - Adding a Custom Method - Get Recent Recipes
+Finally, we will add a new custom method, `GetRecentRecipesAsync`, to retrieve a few of the most recent recipes. 
+
+```csharp
+        public async Task<List<RecipeDto>> GetRecentAsync(int count = 3)
+        {
+            var query = await _recipesRepository.GetQueryableAsync();
+
+            var recentRecipes = query
+                                .OrderByDescending( recipe => recipe.Id )
+                                .Take(count)
+                                .ToList();
+            var recentRecipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
+
+            return recentRecipeDtos;
+        }
+```
+
+### 05.11 - Summary
+In this chapter, we successfully customized each CRUD operation in ABP.io for managing recipes. We learned how to override the default CRUD operations to implement specific business logic. Additionally, we demonstrated how to extend the `CrudAppService` by adding a custom method (`GetRecentRecipesAsync`) to fetch the most recent recipes, showcasing how to go beyond the built-in CRUD operations. These steps give you full control over your application's behavior when interacting with the database, allowing for greater flexibility and tailored functionality within your project.
