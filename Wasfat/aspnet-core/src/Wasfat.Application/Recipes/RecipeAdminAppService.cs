@@ -32,5 +32,21 @@ namespace Wasfat.Recipes
             return recipeDto;
         }
 
+
+        public override async Task<RecipeDto> CreateAsync(RecipeDto input)
+        {
+            var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
+
+            // custom logic
+            recipe.Name = recipe.Name.Trim();
+
+            await Repository.InsertAsync(recipe, autoSave: true);
+
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+            return recipeDto;
+        }
+
+
     }
 }
