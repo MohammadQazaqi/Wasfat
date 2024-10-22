@@ -18,5 +18,19 @@ namespace Wasfat.Recipes
         {
                 
         }
+
+
+        public override async Task<RecipeDto> GetAsync(int id)
+        {
+            var recipe = await Repository.GetAsync(id);
+
+            // custome logic
+            recipe.Name = recipe.Name.Trim();
+
+            var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
+
+            return recipeDto;
+        }
+
     }
 }
