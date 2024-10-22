@@ -442,6 +442,8 @@ We'll override the `GetListAsync` method to retrieve a paginated list of recipes
                 input.Sorting ?? nameof(Recipe.Name)
                 );
 
+            // custom logic    
+
             var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
 
             var pagedResultDto = new PagedResultDto<RecipeDto>(totalCount, recipeDtos);
@@ -462,10 +464,20 @@ Finally, we will add a new custom method, `GetRecentRecipesAsync`, to retrieve a
                                 .OrderByDescending( recipe => recipe.Id )
                                 .Take(count)
                                 .ToList();
+
             var recentRecipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
 
             return recentRecipeDtos;
         }
+```
+
+It's a good idea to add this to the interface so that we avoid making changes after it's been published.
+
+Location:  
+`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
+
+```csharp
+Task<List<RecipeDto>> GetRecentAsync(int count = 3);
 ```
 
 ### 05.11 - Summary
