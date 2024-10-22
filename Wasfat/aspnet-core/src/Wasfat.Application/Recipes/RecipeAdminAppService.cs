@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
@@ -63,5 +64,18 @@ namespace Wasfat.Recipes
             return recipeDto;
         }
 
+
+        public override async Task DeleteAsync(int id)
+        {
+            var recipe = await Repository.GetAsync(id);
+
+            // custom logic
+            if (recipe.Name.Contains("Shawarma", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new UserFriendlyException("you can not delete burgers");
+            }
+
+            await Repository.DeleteAsync(id);
+        }
     }
 }
