@@ -595,7 +595,7 @@ Before proceeding, let's clarify some key terms:
    v18.20.4
    ```
 
-### 06.05 - Documenting the Selected Versions in Angular's README.md File
+### 06.06 - Documenting the Selected Versions in Angular's README.md File
 
 1. Press `Ctrl + P` in VSCode and search for `README.md`.
 
@@ -609,7 +609,7 @@ Before proceeding, let's clarify some key terms:
    Angular: 16.2.16
    ```
 
-### 06.06 - Installing the Selected Version of ABP CLI
+### 06.07 - Installing the Selected Version of ABP CLI
 
 1. Uninstall the Current ABP CLI Version
 
@@ -641,7 +641,7 @@ Before proceeding, let's clarify some key terms:
    ABP CLI 7.4.5
    `
 
-### 06.07 - Installing the Selected Version of Node.js (Before Angular)
+### 06.08 - Installing the Selected Version of Node.js (Before Angular)
 
 1. Perform a google search for:
 
@@ -717,7 +717,7 @@ Before proceeding, let's clarify some key terms:
        14.21.3
    ```
 
-### 06.08 - Installing the Selected Version of Angular CLI
+### 06.09 - Installing the Selected Version of Angular CLI
 
 
 To install **Angular CLI v16.2.16** only for a specific project (e.g., your "custcom" project) without affecting the global version (for the entire NVM being used), you can follow these steps:
@@ -766,7 +766,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    npx ng version
    ```
 
-### 06.09 - Verifying Node: Installing `node_modules`
+### 06.10 - Verifying Node: Installing `node_modules`
 
    Once you have ensured that all the CLI versions (ABP, Node.js, Angular) are set correctly, you should be able to install the required `node_modules` without any issues by running the following command:
 
@@ -776,7 +776,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This command installs all dependencies defined in your `package.json` file.
 
-### 06.10 - Verifying ABP CLI: Generating Proxy
+### 06.11 - Verifying ABP CLI: Generating Proxy
 
    After verifying that the ABP CLI version is correctly installed, you can generate the Angular proxies by running the following command:
 
@@ -786,7 +786,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This will generate the necessary Angular proxy services for communicating with the backend.
 
-### 06.11 - Verifying Angular CLI: Running Angular Commands
+### 06.12 - Verifying Angular CLI: Running Angular Commands
    
    With the correct version of Angular CLI installed, you can now run Angular-specific commands, like serving the Angular project. To ensure everything is working properly, use:
 
@@ -796,5 +796,5 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This will start the Angular development server and allow you to view your project in the browser. You can also use this to run other Angular commands such as generating components or services.
 
-### 06.12 - Summary
+### 06.13 - Summary
 In this chapter, we successfully checked, set, and verified the correct versions for ABP CLI, Node.js, and Angular CLI. We walked through how to check the versions, install them, and document them for future use. Additionally, we verified that Node dependencies could be installed, the Angular proxy could be generated, and Angular CLI commands run smoothly. Managing these versions ensures that your development environment remains consistent and reliable, preventing potential compatibility issues throughout your project's lifecycle.
