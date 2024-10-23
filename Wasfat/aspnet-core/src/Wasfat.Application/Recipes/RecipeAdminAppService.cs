@@ -101,6 +101,20 @@ namespace Wasfat.Recipes
             return pagedResultDto;
         }
 
+        public async Task<List<RecipeDto>> GetRecentAsync(int count = 3)
+        {
+            var query = await _recipesRepository.GetQueryableAsync();
+
+            var recentRecipes = query
+                                .OrderByDescending(recipe => recipe.Id)
+                                .Take(count)
+                                .ToList();
+
+            var recentRecipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recentRecipes);
+
+            return recentRecipeDtos;
+        }
+
 
 
 
