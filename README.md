@@ -393,7 +393,7 @@ We'll override the `UpdateAsync` method to add custom logic when updating a reci
 
             // Only the available values from the input DTO will be applied to the recipe entity.
             // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
-            ObjectMapper.Map<RecipeDto, Recipe>(input,recipe);
+            ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
 
             await _recipesRepository.UpdateAsync(recipe, autoSave: true);
 
@@ -421,7 +421,7 @@ We'll override the `DeleteAsync` method to add any custom logic before deleting 
             // custom logic
             if(recipe.Name.Contains("Shawarma", StringComparison.OrdinalIgnoreCase))
             {
-                throw new UserFriendlyException("you can not delete burgers");
+                throw new UserFriendlyException("you can not delete Shawarmas");
             }
 
             await _recipesRepository.DeleteAsync(id);
@@ -442,7 +442,7 @@ We'll override the `GetListAsync` method to retrieve a paginated list of recipes
                 input.Sorting ?? nameof(Recipe.Name)
                 );
 
-            // custom logic    
+            // custom logic goes here
 
             var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
 
@@ -482,3 +482,319 @@ Task<List<RecipeDto>> GetRecentAsync(int count = 3);
 
 ### 05.11 - Summary
 In this chapter, we successfully customized each CRUD operation in ABP.io for managing recipes. We learned how to override the default CRUD operations to implement specific business logic. Additionally, we demonstrated how to extend the `CrudAppService` by adding a custom method (`GetRecentRecipesAsync`) to fetch the most recent recipes, showcasing how to go beyond the built-in CRUD operations. These steps give you full control over your application's behavior when interacting with the database, allowing for greater flexibility and tailored functionality within your project.
+
+
+***
+## 06 - Checking & Setting the Best CLI Version for ABP, Node, & Angular
+
+### 06.01 - What You Will Learn in This Chapter
+In this chapter, you will learn how to verify and set the correct CLI versions for ABP, Node.js, and Angular. Ensuring that these tools are compatible with each other is essential for keeping your development environment running smoothly. You will also learn how to confirm that these versions are correctly installed and functioning, so you can confidently work on your project without any version-related issues. By the end of this chapter, you’ll be able to manage and document the versions of these tools to maintain a stable and efficient workflow.
+
+### 06.02 - Terminology
+Before proceeding, let's clarify some key terms:
+
+
+- **`NVM (Node Version Manager)`**: A tool that allows developers to install, switch, and manage multiple versions of Node.js on their system.
+- **`npm (Node Package Manager)`**: A package manager for JavaScript that helps in installing and managing dependencies for Node.js applications.
+
+- **`Proxy (Angular/ABP Proxy)`**: A generated service in Angular that acts as an intermediary between your frontend and backend, making it easier to interact with APIs. 
+
+
+### 06.03 - Checking the Best Version for ABP CLI
+
+1. Open your project in Visual Studio.
+
+2. Use the shortcut `Ctrl + Shift + t` to search for the `.csproj` file, for example:
+
+   ```bash
+   Application.csproj
+   ```
+
+3. You should find a path similar to:
+   
+   ```
+   aspnet-core\src\Wasfat.Application\Wasfat.Application.csproj
+   ```
+
+4. Inside the `.csproj` file, locate the `PackageReference` tags to check the current ABP version:
+   
+   ```xml
+   <ItemGroup>
+     <PackageReference Include="Volo.Abp.Account.Application" Version="7.4.5" />
+     <PackageReference Include="Volo.Abp.Identity.Application" Version="7.4.5" />
+     <PackageReference Include="Volo.Abp.PermissionManagement.Application" Version="7.4.5" />
+     <PackageReference Include="Volo.Abp.TenantManagement.Application" Version="7.4.5" />
+     <PackageReference Include="Volo.Abp.FeatureManagement.Application" Version="7.4.5" />
+     <PackageReference Include="Volo.Abp.SettingManagement.Application" Version="7.4.5" />
+   </ItemGroup>
+   ```
+   
+5. Note the version of ABP in your project, in this case, 
+
+    `
+    7.4.5
+    `
+
+### 06.04 - Checking the Best Version for Angular CLI
+
+1. In VSCode, press `Ctrl + P` and search for `package.json`.
+
+2. Inside `package.json`, search for `@angular/core`:
+
+   ```bash
+   "@angular/core": "~16.2.0",
+   ```
+
+3. perform a google search for:
+
+   ```
+   angular cli releases
+   ```
+
+4. Visit the `npmjs.com` result: (at the time of the recording)
+
+   ```
+   https://www.npmjs.com/package/@angular/cli?activeTab=versions
+   ```
+
+5. Search for the latest release in the `~16.2.0` range, and take note of it, in our case:
+
+   ```
+   16.2.16
+   ```
+
+### 06.05 - Checking the Best Version for Node.js
+
+1. Perform a Google search for:
+   
+   ```
+   angular version compatibility
+   ```
+
+2. You should find a reference page as a result: (at the time of the recording)
+
+   ```
+   https://angular.dev/reference/releases
+   ```
+
+3. Look for the recommended Node.js versions for your Angular version:
+   
+   ```
+   16.1.x || 16.2.x    ^16.14.0 || ^18.10.0
+   ```
+
+4. Next, search for the latest Node.js release within this range by googling:
+
+   ```
+   node releases
+   ```
+
+5. Choose the result from Nodejs.org and find the latest version in the `^18.10.0` range, for example:
+   
+   ```
+   v18.20.4
+   ```
+
+### 06.05 - Documenting the Selected Versions in Angular's README.md File
+
+1. Press `Ctrl + P` in VSCode and search for `README.md`.
+
+2. Add the following section to document the versions selected:
+
+   ```bash
+   ## CLI Versions Used in This Project
+
+   ABP: 7.4.5
+   Node: 18.20.4
+   Angular: 16.2.16
+   ```
+
+### 06.06 - Installing the Selected Version of ABP CLI
+
+1. Uninstall the Current ABP CLI Version
+
+   Run the following command to uninstall the existing ABP CLI version:
+
+   ```bash
+   dotnet tool uninstall -g Volo.Abp.Cli
+   ```
+
+2. Install the Specific Version of ABP CLI
+
+   To install the desired version (e.g., `7.4.5`), run:
+
+   ```bash
+   dotnet tool install -g Volo.Abp.Cli --version 7.4.5
+   ```
+
+3. Verify the Installed Version
+
+   After installation, verify the ABP CLI version:
+
+   ```bash
+   abp -v
+   ```
+
+   You should see something like this:
+
+   `
+   ABP CLI 7.4.5
+   `
+
+### 06.07 - Installing the Selected Version of Node.js (Before Angular)
+
+1. Perform a google search for:
+
+   ```bash
+   nvm for windows
+   ```
+
+2. Go to the GitHub release page:
+
+   ```
+   https://github.com/coreybutler/nvm-windows
+   ```
+
+3. Download and install the setup file (admin rights may be needed), for example:
+
+   ```
+   https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-setup.exe
+   ```
+
+4. Verify that `nvm` is installed:
+
+   ```bash
+   nvm -v
+   ```
+   
+   Output should look like this:
+   
+   `
+   1.1.12
+   `
+
+5. Install the Selected Node Version
+
+   In our case, run the following command to install Node.js v18.20.4:
+
+   ```bash
+   nvm install 18.20.4
+   ```
+
+6. Verify the Installation
+   List all installed Node.js versions:
+
+   ```bash
+   nvm list
+   ```
+   Expected output:
+
+   ```
+       20.18.0
+       18.20.4
+       16.19.1
+     * 14.21.3 (Currently using 64-bit executable)
+   ```
+
+7. Switch to the desired Node version
+
+   ```bash
+   nvm use 18.20.4
+   ```
+
+   Verify again:
+
+   ```bash
+   nvm list
+   ```
+
+   Output should show the active version:
+
+   ```
+       20.18.0
+     * 18.20.4 (Currently using 64-bit executable)
+       16.19.1
+       14.21.3
+   ```
+
+### 06.08 - Installing the Selected Version of Angular CLI
+
+
+To install **Angular CLI v16.2.16** only for a specific project (e.g., your "custcom" project) without affecting the global version (for the entire NVM being used), you can follow these steps:
+
+
+1. Make Sure You're Using the Correct Node Version
+
+   Make sure you're using the correct Node version before installing Angular CLI:
+
+   ```bash
+   nvm use 18.20.4
+   ```
+
+2. Navigate to Your Project Directory
+
+   Navigate to your Angular project directory:
+
+   ```bash
+   cd C:\path\to\your\repos\wasfat\Wasfat\angular
+   ```
+
+3. Install the Specific Angular CLI Version
+
+   Run the following command to install the specific Angular CLI version (e.g., 16.2.16):
+   
+
+   ```bash
+   npm install @angular/cli@16.2.16 --save-dev
+   ```
+    
+    **⚠️ Note :** 
+    > We did not use the `-g` flag to ensure that Angular CLI is installed locally with the desired version specifically for this project. This avoids potential conflicts with globally installed versions and ensures that the correct version is always used within the project.
+
+
+4. Use `npx` for Angular CLI Commands
+
+   From now on you should run Angular CLI commands using `npx` prefix to ensure you're using the local version:
+
+   ```bash
+   npx ng serve
+   ```
+
+5. Verify the Installed Angular Version
+ 
+   ```bash
+   npx ng version
+   ```
+
+### 06.09 - Verifying Node: Installing `node_modules`
+
+   Once you have ensured that all the CLI versions (ABP, Node.js, Angular) are set correctly, you should be able to install the required `node_modules` without any issues by running the following command:
+
+   ```bash
+   npm install
+   ```
+
+   This command installs all dependencies defined in your `package.json` file.
+
+### 06.10 - Verifying ABP CLI: Generating Proxy
+
+   After verifying that the ABP CLI version is correctly installed, you can generate the Angular proxies by running the following command:
+
+   ```bash
+   abp generate-proxy -t ng
+   ```
+
+   This will generate the necessary Angular proxy services for communicating with the backend.
+
+### 06.11 - Verifying Angular CLI: Running Angular Commands
+   
+   With the correct version of Angular CLI installed, you can now run Angular-specific commands, like serving the Angular project. To ensure everything is working properly, use:
+
+   ```bash
+   npx ng serve
+   ```
+
+   This will start the Angular development server and allow you to view your project in the browser. You can also use this to run other Angular commands such as generating components or services.
+
+### 06.12 - Summary
+In this chapter, we successfully checked, set, and verified the correct versions for ABP CLI, Node.js, and Angular CLI. We walked through how to check the versions, install them, and document them for future use. Additionally, we verified that Node dependencies could be installed, the Angular proxy could be generated, and Angular CLI commands run smoothly. Managing these versions ensures that your development environment remains consistent and reliable, preventing potential compatibility issues throughout your project's lifecycle.
