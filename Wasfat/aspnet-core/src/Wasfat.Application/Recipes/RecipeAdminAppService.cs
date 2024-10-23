@@ -81,6 +81,27 @@ namespace Wasfat.Recipes
         }
 
 
+        public override async Task<PagedResultDto<RecipeDto>> GetListAsync(PagedAndSortedResultRequestDto input)
+        {
+            var totalCount = await _recipesRepository.GetCountAsync();
+
+            var recipes = await _recipesRepository.GetPagedListAsync(
+                input.SkipCount,
+                input.MaxResultCount,
+                input.Sorting ?? nameof(Recipe.Name)
+                );
+
+            // custom logic goes here  
+
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+            var pagedResultDto = new PagedResultDto<RecipeDto>(totalCount, recipeDtos);
+
+            return pagedResultDto;
+        }
+
+
 
 
     }
