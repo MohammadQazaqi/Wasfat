@@ -12,18 +12,20 @@ namespace Wasfat.Recipes
 {
     public class RecipeAdminAppService : CrudAppService<Recipe, RecipeDto, int, PagedAndSortedResultRequestDto>, IRecipeAppService
     {
+        private readonly IRepository<Recipe, int> _recipesRepository;
+
         public RecipeAdminAppService(
-            IRepository<Recipe, int> repository
+            IRepository<Recipe, int> recipesRepository
             )
-        : base(repository)
+        : base(recipesRepository)
         {
-                
+            _recipesRepository = recipesRepository;
         }
 
 
         public override async Task<RecipeDto> GetAsync(int id)
         {
-            var recipe = await Repository.GetAsync(id);
+            var recipe = await _recipesRepository.GetAsync(id);
 
             // custome logic
             recipe.Name = recipe.Name.Trim();
@@ -41,7 +43,7 @@ namespace Wasfat.Recipes
             // custom logic
             recipe.Name = recipe.Name.Trim();
 
-            await Repository.InsertAsync(recipe, autoSave: true);
+            await _recipesRepository.InsertAsync(recipe, autoSave: true);
 
             var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
@@ -51,13 +53,13 @@ namespace Wasfat.Recipes
 
         public override async Task<RecipeDto> UpdateAsync(int id, RecipeDto input)
         {
-            var recipe = await Repository.GetAsync(id);
+            var recipe = await _recipesRepository.GetAsync(id);
 
             // Only the available values from the input DTO will be applied to the recipe entity.
             // IMPORTANT: Any values not present in the DTO will remain unchanged in the recipe.
             ObjectMapper.Map<RecipeDto, Recipe>(input, recipe);
 
-            await Repository.UpdateAsync(recipe, autoSave: true);
+            await _recipesRepository.UpdateAsync(recipe, autoSave: true);
 
             var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
 
@@ -67,7 +69,7 @@ namespace Wasfat.Recipes
 
         public override async Task DeleteAsync(int id)
         {
-            var recipe = await Repository.GetAsync(id);
+            var recipe = await _recipesRepository.GetAsync(id);
 
             // custom logic
             if (recipe.Name.Contains("Shawarma", StringComparison.OrdinalIgnoreCase))
@@ -75,7 +77,11 @@ namespace Wasfat.Recipes
                 throw new UserFriendlyException("you can not delete burgers");
             }
 
-            await Repository.DeleteAsync(id);
+            await _recipesRepository.DeleteAsync(id);
         }
+
+
+
+
     }
 }
