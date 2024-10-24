@@ -493,13 +493,13 @@ In this chapter, you will learn how to verify and set the correct CLI versions f
 ### 06.02 - Terminology
 Before proceeding, let's clarify some key terms:
 
-- **`ABP Package Versions`**: are the versions of the backend and frontend libraries provided by the ABP framework, such as `Volo.Abp.*`, used for implementing various features in your ABP.io application. It is best to ensure that these package versions are compatible with the ABP CLI, Angular CLI, Angular packages, Node.js, and NPM versions to ensure smooth development and deployment.
+- **`ABP Packages Versions`**: are the versions of the backend and frontend libraries provided by the ABP framework, such as `Volo.Abp.*`, used for implementing various features in your ABP.io application. It is best to ensure that these package versions are compatible with the ABP CLI, Angular CLI, Angular packages, Node.js, and NPM versions to ensure smooth development and deployment.
 
 - **`ABP CLI Version`**: is the version of the Command Line Interface tool used to create, build, and manage ABP.io projects. It is best to ensure that this version is compatible not only with the ABP package versions but also with the Angular CLI, Angular packages, Node.js, and NPM versions to enable smooth development and deployment.
 
-- **`Angular CLI Version`**: is the version of the command-line tool used to create, develop, and maintain Angular applications. It is best to ensure that the Angular CLI version is compatible with the Angular package versions, ABP CLI, Node.js, and NPM versions to avoid conflicts and ensure smooth development and deployment.
+- **`Angular Packages Versions`**: are the versions of the libraries and modules that make up the Angular framework, such as `@angular/core` and `@angular/common`. It is best to ensure that these package versions are compatible with the Angular CLI, ABP packages, ABP CLI, Node.js, and NPM versions to ensure smooth development and deployment.
 
-- **`Angular Package Versions`**: are the versions of the libraries and modules that make up the Angular framework, such as `@angular/core` and `@angular/common`. It is best to ensure that these package versions are compatible with the Angular CLI, ABP packages, ABP CLI, Node.js, and NPM versions to ensure smooth development and deployment.
+- **`Angular CLI Version`**: is the version of the command-line tool used to create, develop, and maintain Angular applications. It is best to ensure that the Angular CLI version is compatible with the Angular package versions, ABP CLI, Node.js, and NPM versions to avoid conflicts and ensure smooth development and deployment.
 
 - **`Node.js Version`**: is the version of the JavaScript **runtime** that executes JavaScript code on the server. It is best to ensure that the Node.js version is compatible with Angular CLI, Angular packages, ABP CLI, ABP packages, and NPM versions to ensure smooth development and deployment.
 
@@ -724,10 +724,10 @@ Before proceeding, let's clarify some key terms:
        14.21.3
    ```
 
-### 06.09 - Installing the Selected Version of Angular CLI
+### 06.09 - Installing the Selected Version of Angular CLI (Locally)
 
 
-To install **Angular CLI v16.2.16** only for a specific project (e.g., your "custcom" project) without affecting the global version (for the entire NVM being used), you can follow these steps:
+To install **Angular CLI v16.2.16** only for a specific project (e.g., your "custom" project) without affecting the global version (for the entire NVM being used), you can follow these steps:
 
 
 1. Make Sure You're Using the Correct Node Version
@@ -793,7 +793,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This will generate the necessary Angular proxy services for communicating with the backend.
 
-### 06.12 - Verifying Angular CLI: Running Angular Commands
+### 06.12 - Verifying Angular CLI: Serving Angular
    
    With the correct version of Angular CLI installed, you can now run Angular-specific commands, like serving the Angular project. To ensure everything is working properly, use:
 
@@ -803,5 +803,66 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This will start the Angular development server and allow you to view your project in the browser. You can also use this to run other Angular commands such as generating components or services.
 
-### 06.13 - Summary
+
+### 06.13 - Running Angular Workflow: Minimizing Issues
+
+1. **Check ABP, Node, and Angular Versions**  
+
+   Open the `README.md` file and verify the ABP, Node, and Angular versions we documented earlier. Ensure that all versions are aligned with the specified requirements.
+
+2. **Verify ABP CLI Version**  
+   
+   Check if the ABP CLI version matches the documented version. If not, uninstall the current version and install the desired version:
+
+   ```bash
+   abp -v
+   ```
+
+   To uninstall the current ABP CLI version:
+
+   ```bash
+   dotnet tool uninstall -g Volo.Abp.Cli
+   ```
+
+   To install the correct ABP CLI version:
+
+   ```bash
+   dotnet tool install -g Volo.Abp.Cli --version 7.4.5
+   ```
+
+3. **Check Node.js Version**  
+
+   Ensure the selected Node.js runtime version matches the documented version. If not, switch to the correct Node.js version:
+
+   ```bash
+   nvm list
+   ```
+
+   ```bash
+   nvm use 18.20.4
+   ```
+
+   If needed, install the required Node.js version:
+
+   ```bash
+   nvm install 18.20.4
+   ```
+
+4. **Verify Angular CLI Version**  
+
+   Check the local Angular CLI version:
+
+   ```bash
+   npx ng version
+   ```
+
+   If the Angular CLI version does not match the desired version, install the correct version locally:
+
+   ```bash
+   npm install @angular/cli@16.2.16 --save-dev
+   ```
+
+   By following these steps, you can ensure that your Angular workflow is running smoothly and minimize any version-related issues.
+
+### 06.14 - Summary
 In this chapter, we successfully checked, set, and verified the correct versions for ABP CLI, Node.js, and Angular CLI. We walked through how to check the versions, install them, and document them for future use. Additionally, we verified that Node dependencies could be installed, the Angular proxy could be generated, and Angular CLI commands run smoothly. Managing these versions ensures that your development environment remains consistent and reliable, preventing potential compatibility issues throughout your project's lifecycle.
