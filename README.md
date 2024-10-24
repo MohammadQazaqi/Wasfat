@@ -848,7 +848,15 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    nvm install 18.20.4
    ```
 
-4. **Verify Angular CLI Version**  
+4. **Install Project Dependencies**  
+
+   After switching to the correct Node.js version, install all the required project dependencies by running:
+
+   ```bash
+   npm install
+   ```
+
+5. **Verify Angular CLI Version**  
 
    Check the local Angular CLI version:
 
@@ -862,7 +870,18 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    npm install @angular/cli@16.2.16 --save-dev
    ```
 
+6. **Serve the Angular Application**  
+
+   After ensuring everything is in place, serve the Angular application:
+
+   ```bash
+   npx serve -o
+   ```
+
+   This command will start the development server and open the application in your default web browser.
+
    By following these steps, you can ensure that your Angular workflow is running smoothly and minimize any version-related issues.
+
 
 ### 06.14 - Summary
 In this chapter, we successfully checked, set, and verified the correct versions for ABP CLI, Node.js, and Angular CLI. We walked through how to check the versions, install them, and document them for future use. Additionally, we verified that Node dependencies could be installed, the Angular proxy could be generated, and Angular CLI commands run smoothly. Managing these versions ensures that your development environment remains consistent and reliable, preventing potential compatibility issues throughout your project's lifecycle.
