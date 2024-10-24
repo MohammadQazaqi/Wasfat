@@ -485,7 +485,7 @@ In this chapter, we successfully customized each CRUD operation in ABP.io for ma
 
 
 ***
-## 06 - Checking & Setting the Best CLI Version for ABP, Node, & Angular
+## 06 - Configuring CLI Versions for ABP, Node, & Angular
 
 ### 06.01 - What You Will Learn in This Chapter
 In this chapter, you will learn how to verify and set the correct CLI versions for ABP, Node.js, and Angular. Ensuring that these tools are compatible with each other is essential for keeping your development environment running smoothly. You will also learn how to confirm that these versions are correctly installed and functioning, so you can confidently work on your project without any version-related issues. By the end of this chapter, you’ll be able to manage and document the versions of these tools to maintain a stable and efficient workflow.
@@ -493,12 +493,19 @@ In this chapter, you will learn how to verify and set the correct CLI versions f
 ### 06.02 - Terminology
 Before proceeding, let's clarify some key terms:
 
+- **`ABP Package Versions`**: are the versions of the backend and frontend libraries provided by the ABP framework, such as `Volo.Abp.*`, used for implementing various features in your ABP.io application. It is best to ensure that these package versions are compatible with the ABP CLI, Angular CLI, Angular packages, Node.js, and NPM versions to ensure smooth development and deployment.
 
-- **`NVM (Node Version Manager)`**: A tool that allows developers to install, switch, and manage multiple versions of Node.js on their system.
-- **`npm (Node Package Manager)`**: A package manager for JavaScript that helps in installing and managing dependencies for Node.js applications.
+- **`ABP CLI Version`**: is the version of the Command Line Interface tool used to create, build, and manage ABP.io projects. It is best to ensure that this version is compatible not only with the ABP package versions but also with the Angular CLI, Angular packages, Node.js, and NPM versions to enable smooth development and deployment.
 
-- **`Proxy (Angular/ABP Proxy)`**: A generated service in Angular that acts as an intermediary between your frontend and backend, making it easier to interact with APIs. 
+- **`Angular CLI Version`**: is the version of the command-line tool used to create, develop, and maintain Angular applications. It is best to ensure that the Angular CLI version is compatible with the Angular package versions, ABP CLI, Node.js, and NPM versions to avoid conflicts and ensure smooth development and deployment.
 
+- **`Angular Package Versions`**: are the versions of the libraries and modules that make up the Angular framework, such as `@angular/core` and `@angular/common`. It is best to ensure that these package versions are compatible with the Angular CLI, ABP packages, ABP CLI, Node.js, and NPM versions to ensure smooth development and deployment.
+
+- **`Node.js Version`**: is the version of the JavaScript **runtime** that executes JavaScript code on the server. It is best to ensure that the Node.js version is compatible with Angular CLI, Angular packages, ABP CLI, ABP packages, and NPM versions to ensure smooth development and deployment.
+
+- **`NPM CLI Version`**: is the CLI version of the (Node Package Manager), bundled with Node.js, used to install, update, and manage JavaScript dependencies. Installing Node.js will automatically ensure the correct version of NPM is installed unless manually modified later.
+
+- **`NVM Version`**: is the version of the Node Version Manager (NVM), a tool that allows developers to install, switch, and manage multiple versions of Node.js on their system. It is not critical to install a specific version of NVM; it is best to install the latest version to ensure compatibility and smooth development and deployment across different environments.
 
 ### 06.03 - Checking the Best Version for ABP CLI
 
