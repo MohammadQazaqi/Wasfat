@@ -870,7 +870,11 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    npm install @angular/cli@16.2.16 --save-dev
    ```
 
-6. **Serve the Angular Application**  
+6. **Run the ABP.io Backend (HttpApi.Host) from within Visual Studio**   
+
+   Project name: Wasfat.HttpApi.Host
+
+7. **Serve the Angular Application**  
 
    After ensuring everything is in place, serve the Angular application:
 
