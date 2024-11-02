@@ -940,43 +940,6 @@ To set up an administration portal distinct from the public-facing site, we will
 
 By separating these applications, we can maintain a clear distinction between admin and customer functionalities, improving modularity and security in our project structure.
 
-#### Steps to Set Up `admin.angular`
-
-1. **Temporarily Move the `node_modules` Directory**  
-
-   Move `node_modules` out of `angular` to avoid copying this large directory. This will reduce time and space during the copying process.
-
-   ```bash
-   mv .\angular\node_modules .\node_modules
-   ```
-
-2. **Rename `angular` to `fresh.angular`**  
-
-   Use `git mv` to rename `angular` to `fresh.angular`:
-
-   ```bash
-   git mv .\angular\ .\fresh.angular\
-   ```
-
-3. **Copy `fresh.angular` to Create `admin.angular`** 
-
-   Copy the `fresh.angular` directory to create `admin.angular`.
-
-   ```bash
-   cp -r .\fresh.angular\ .\admin.angular\
-   ```
-
-4. **Move `node_modules` into `admin.angular`**  
-
-   Return the `node_modules` directory to `admin.angular` to restore dependencies for the new admin application:
-
-   ```bash
-   mv .\node_modules .\admin.angular\node_modules
-   ```
-
-This setup provides separate Angular applications for public and admin purposes, each with clear functionality boundaries, and avoids unnecessary duplication of `node_modules` during the copy process.
-
-
 ### 07.04 - Generating the Recipes Module
 
 To create the `recipes` module with routing, use the following command:
