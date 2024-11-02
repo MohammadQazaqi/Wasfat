@@ -934,7 +934,7 @@ In this chapter, you will learn how to create a new module in an Angular applica
 - **`Localization`**: Localization allows the application to display text in different languages, enhancing usability for a multilingual audience. Localized text is typically defined in JSON files for each supported language.
 
 
-### 07.03 - Setting Up admin.angular
+### 07.03 - fresh.angular & admin.angular
 
 To set up an administration portal distinct from the public-facing site, we will create a separate Angular application named `admin.angular`. This application will serve as the front end for managing domain and administration tasks, while another copy of the the original Angular application will be used for the public site later on, where customers can browse the website and interact with public-facing features.
 
