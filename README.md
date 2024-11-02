@@ -501,13 +501,13 @@ Before proceeding, let's clarify some key terms:
 
 - **`Angular CLI Version`**: is the version of the command-line tool used to create, develop, and maintain Angular applications. It is best to ensure that the Angular CLI version is compatible with the Angular package versions, ABP CLI, Node.js, and NPM versions to avoid conflicts and ensure smooth development and deployment.
 
-- **`Node.js Version`**: is the version of the JavaScript **runtime** that executes JavaScript code on the server. It is best to ensure that the Node.js version is compatible with Angular CLI, Angular packages, ABP CLI, ABP packages, and NPM versions to ensure smooth development and deployment.
+- **`NVM Version`**: is the version of the Node Version Manager (NVM), a tool that allows developers to install, switch, and manage multiple versions of Node.js on their system. It is not critical to install a specific version of NVM; it is best to install the latest version to ensure compatibility and smooth development and deployment across different environments.
+
+- **`Node Version`**: is the version of the JavaScript **runtime** that executes JavaScript code on the server. It is best to ensure that the Node.js version is compatible with Angular CLI, Angular packages, ABP CLI, ABP packages, and NPM versions to ensure smooth development and deployment.
 
 - **`NPM CLI Version`**: is the CLI version of the (Node Package Manager), bundled with Node.js, used to install, update, and manage JavaScript dependencies. Installing Node.js will automatically ensure the correct version of NPM is installed unless manually modified later.
 
-- **`NVM Version`**: is the version of the Node Version Manager (NVM), a tool that allows developers to install, switch, and manage multiple versions of Node.js on their system. It is not critical to install a specific version of NVM; it is best to install the latest version to ensure compatibility and smooth development and deployment across different environments.
-
-### 06.03 - Checking the Best Version for ABP CLI
+### 06.03 - Checking Installed ABP Packages Versions
 
 1. Open your project in Visual Studio.
 
@@ -542,7 +542,7 @@ Before proceeding, let's clarify some key terms:
     7.4.5
     `
 
-### 06.04 - Checking the Best Version for Angular CLI
+### 06.04 - Checking Installed Angular Packages Versions
 
 1. In VSCode, press `Ctrl + P` and search for `package.json`.
 
@@ -570,7 +570,7 @@ Before proceeding, let's clarify some key terms:
    16.2.16
    ```
 
-### 06.05 - Checking the Best Version for Node.js
+### 06.05 - Checking the Best Node Runtime to Install
 
 1. Perform a Google search for:
    
@@ -602,23 +602,30 @@ Before proceeding, let's clarify some key terms:
    v18.20.4
    ```
 
-### 06.06 - Documenting the Selected Versions in Angular's README.md File
+### 06.06 - Documenting Versions in Angular's README
 
 1. Press `Ctrl + P` in VSCode and search for `README.md`.
 
 2. Add the following section to document the versions selected:
 
    ```bash
-   ## CLI Versions Used in This Project
+   ## Versions Used in This Project
 
    ABP: 7.4.5
    Node: 18.20.4
    Angular: 16.2.16
    ```
 
-### 06.07 - Installing the Selected Version of ABP CLI
+### 06.07 - Installing the Most Compatible ABP CLI Version
 
-1. Uninstall the Current ABP CLI Version
+
+1. Verify the Installed Version
+
+   ```bash
+   abp -v
+   ```
+
+2. Uninstall the Current ABP CLI Version if needed
 
    Run the following command to uninstall the existing ABP CLI version:
 
@@ -626,7 +633,7 @@ Before proceeding, let's clarify some key terms:
    dotnet tool uninstall -g Volo.Abp.Cli
    ```
 
-2. Install the Specific Version of ABP CLI
+3. Install the Specific Version of ABP CLI
 
    To install the desired version (e.g., `7.4.5`), run:
 
@@ -634,7 +641,7 @@ Before proceeding, let's clarify some key terms:
    dotnet tool install -g Volo.Abp.Cli --version 7.4.5
    ```
 
-3. Verify the Installed Version
+4. Verify the Installed Version again
 
    After installation, verify the ABP CLI version:
 
@@ -648,7 +655,7 @@ Before proceeding, let's clarify some key terms:
    ABP CLI 7.4.5
    `
 
-### 06.08 - Installing the Selected Version of Node.js (Before Angular)
+### 06.08 - Installing the Most Compatible Node Runtime Version
 
 1. Perform a google search for:
 
@@ -724,7 +731,7 @@ Before proceeding, let's clarify some key terms:
        14.21.3
    ```
 
-### 06.09 - Installing the Selected Version of Angular CLI (Locally)
+### 06.09 - Installing the Most Compatible Angular CLI Version (Locally)
 
 
 To install **Angular CLI v16.2.16** only for a specific project (e.g., your "custom" project) without affecting the global version (for the entire NVM being used), you can follow these steps:
@@ -746,9 +753,18 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    cd C:\path\to\your\repos\wasfat\Wasfat\angular
    ```
 
-3. Install the Specific Angular CLI Version
+3. (GLOBALLY) Uninstall the global Angular CLI first 
 
-   Run the following command to install the specific Angular CLI version (e.g., 16.2.16):
+   Run the following command to (GLOBALLY) uninstall Angular CLI version (e.g., 16.2.16):
+   
+
+   ```bash
+   npm uninstall -g @angular/cli
+   ```
+
+3. (LOCALLY) Install the Specific Angular CLI Version
+
+   Run the following command to (LOCALLY) install the specific Angular CLI version (e.g., 16.2.16):
    
 
    ```bash
@@ -773,7 +789,9 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    npx ng version
    ```
 
-### 06.10 - Verifying Node: Installing `node_modules`
+### 06.10 - Testing Node Runtime Compatibility
+
+Testing Node Runtime Compatibility Our Project
 
    Once you have ensured that all the CLI versions (ABP, Node.js, Angular) are set correctly, you should be able to install the required `node_modules` without any issues by running the following command:
 
@@ -783,7 +801,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This command installs all dependencies defined in your `package.json` file.
 
-### 06.11 - Verifying ABP CLI: Generating Proxy
+### 06.11 - Testing ABP CLI Compatibility
 
    After verifying that the ABP CLI version is correctly installed, you can generate the Angular proxies by running the following command:
 
@@ -793,7 +811,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This will generate the necessary Angular proxy services for communicating with the backend.
 
-### 06.12 - Verifying Angular CLI: Serving Angular
+### 06.12 - Testing Angular CLI Compatibility
    
    With the correct version of Angular CLI installed, you can now run Angular-specific commands, like serving the Angular project. To ensure everything is working properly, use:
 
@@ -803,8 +821,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
 
    This will start the Angular development server and allow you to view your project in the browser. You can also use this to run other Angular commands such as generating components or services.
 
-
-### 06.13 - Running Angular Workflow: Minimizing Issues
+### 06.13 - The Optimal Process for Running ABP Projects
 
 1. **Check ABP, Node, and Angular Versions**  
 
@@ -830,7 +847,7 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    dotnet tool install -g Volo.Abp.Cli --version 7.4.5
    ```
 
-3. **Check Node.js Version**  
+3. **Check Node Version**  
 
    Ensure the selected Node.js runtime version matches the documented version. If not, switch to the correct Node.js version:
 
@@ -870,16 +887,24 @@ To install **Angular CLI v16.2.16** only for a specific project (e.g., your "cus
    npm install @angular/cli@16.2.16 --save-dev
    ```
 
-6. **Run the ABP.io Backend (HttpApi.Host) from within Visual Studio**   
+6. **Run the ABP Backend (HttpApi.Host) from within Visual Studio**   
 
    Project name: Wasfat.HttpApi.Host
 
-7. **Serve the Angular Application**  
+7. **Generate the Proxies**  
+
+   After running the backend we can go ahead and generate the proxies:
+   
+   ```bash
+   abp generate-proxy -t ng
+   ```
+
+8. **Serve the Angular Application**  
 
    After ensuring everything is in place, serve the Angular application:
 
    ```bash
-   npx serve -o
+   npx ng serve -o
    ```
 
    This command will start the development server and open the application in your default web browser.
