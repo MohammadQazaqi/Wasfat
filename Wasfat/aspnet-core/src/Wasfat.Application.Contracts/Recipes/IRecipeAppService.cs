@@ -13,6 +13,6 @@ namespace Wasfat.Recipes
              PagedAndSortedResultRequestDto>
     {
 
-        Task<List<RecipeDto>> GetRecent(int count = 3);
+        Task<List<RecipeDto>> GetRecentAsync(int count = 3);
     }
 }
