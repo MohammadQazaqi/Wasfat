@@ -1,5 +1,11 @@
 # Wasfat
 
+## Cli Versions Used in This Project
+
+ABP: 7.4.5
+Node: 18.20.4
+Angular: 16.2.16
+
 This is a startup project based on the ABP framework. For more information, visit <a href="https://abp.io/" target="_blank">abp.io</a>
 
 ## Development server
