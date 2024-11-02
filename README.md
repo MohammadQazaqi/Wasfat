@@ -914,3 +914,144 @@ Testing Node Runtime Compatibility Our Project
 
 ### 06.14 - Summary
 In this chapter, we successfully checked, set, and verified the correct versions for ABP CLI, Node.js, and Angular CLI. We walked through how to check the versions, install them, and document them for future use. Additionally, we verified that Node dependencies could be installed, the Angular proxy could be generated, and Angular CLI commands run smoothly. Managing these versions ensures that your development environment remains consistent and reliable, preventing potential compatibility issues throughout your project's lifecycle.
+
+
+## 07 - Setting Up the Recipes Module
+
+### 07.01 - What You Will Learn in This Chapter
+In this chapter, you will learn how to create a new module in an Angular application, specifically for managing recipes. You will generate components within this module for listing and creating recipes, configure routing, add menus for easy navigation, and set up localization for a multilingual interface. By the end of this chapter, you’ll be able to set up a fully functioning module in your Angular project, complete with navigation and localization.
+
+### 07.02 - Terminology
+
+- **`Module`**: In Angular, a module is a cohesive block of code dedicated to a specific purpose, such as managing recipes. Modules help organize code by grouping related components, services, and other files.
+  
+- **`Component`**: A component is a fundamental UI building block in Angular. Each component consists of a TypeScript file, an HTML template, and a CSS file for styling. Components are reusable pieces that define how the UI should look and behave.
+
+- **`Routing`**: Routing in Angular allows navigation between different views or components. Routes are configured in the routing module, making it easy to define which component loads based on the URL path.
+
+- **`Menus`**: Menus provide navigation options within the application. Configuring menus allows users to easily access different sections of the app, like viewing or creating recipes.
+
+- **`Localization`**: Localization allows the application to display text in different languages, enhancing usability for a multilingual audience. Localized text is typically defined in JSON files for each supported language.
+
+
+### 07.03 - Copying `angular` to `admin.angular`
+
+To set up an administration portal distinct from the public-facing site, we will create a separate Angular application named `admin.angular`. This application will serve as the front end for managing our domain and administration tasks, while another Angular application will be used for the public site, where customers can browse the website and interact with public-facing features.
+
+By separating these applications, we can maintain a clear distinction between admin and customer functionalities, improving modularity and security in our project structure.
+
+### 07.04 - Generating the Recipes Module
+
+To create the `recipes` module with routing, use the following command:
+
+```bash
+npx ng generate module recipes --routing
+```
+
+This will generate the `recipes` folder structure with a module file (`recipes.module.ts`) and a routing module (`recipes-routing.module.ts`).
+
+### 07.05 - Generating the List Recipes Component
+
+Generate the `ListRecipes` component inside the `recipes` module. This component will display a list of all available recipes:
+
+```bash
+npx ng generate component recipes/list-recipes
+```
+
+This command creates `list-recipes.component.ts`, `list-recipes.component.html`, and `list-recipes.component.css`.
+
+### 07.06 - Generating the CRUD Recipe Component
+
+Generate the `CrudRecipe` component to handle creating, reading, updating, and deleting recipes:
+
+```bash
+npx ng generate component recipes/crud-recipe
+```
+
+This command will add `crud-recipe.component.ts`, `crud-recipe.component.html`, and `crud-recipe.component.css`.
+
+### 07.07 - Adding the Main Route to the Recipes Module
+
+In `app-routing.module.ts`, configure the main route for the `recipes` module.
+
+```typescript
+{
+  path: 'recipes',
+  loadChildren: () =>
+    import('./recipes/recipes.module').then(m => m.RecipesModule)
+},
+```
+
+### 07.08 - Routing Inside the Recipes Module
+
+Define specific routes for the `ListRecipes` and `CrudRecipe` components in `recipes-routing.module.ts`:
+
+```typescript
+const routes: Routes = [
+  { 
+   path: 'list', 
+   component: ListRecipesComponent 
+  },
+  { 
+   path: 'crud', 
+   component: CrudRecipeComponent
+   }
+];
+```
+
+### 07.03 - Adding Menus for Our Routes
+
+Configure menus in `route.provider.ts` to provide navigation options for the recipes module:
+
+```typescript
+{
+  path: '',
+  name: '::Menu:Recipes',
+  iconClass: 'fas fa-home',
+  order: 2,
+  layout: eLayoutType.application,
+},
+{
+  path: '/recipes/list',
+  name: '::Menu:ListRecipes',
+  parentName: '::Menu:Recipes',
+  iconClass: 'fas fa-bars',
+  order: 1,
+  layout: eLayoutType.application,
+},
+{
+  path: '/recipes/crud',
+  name: '::Menu:CrudRecipe',
+  parentName: '::Menu:Recipes',
+  iconClass: 'fas fa-edit',
+  order: 2,
+  layout: eLayoutType.application,
+},
+```
+
+### 07.10 - A Quick Look at Localization
+
+
+To support multiple languages, add localization entries in JSON files, like `en.json` for English and `it.json` for Italian.
+
+**en.json**:
+```json
+{
+  "Menu:Recipes": "Recipes",
+  "Menu:ListRecipes": "List Recipes",
+  "Menu:CrudRecipes": "CRUD Recipe"
+}
+```
+
+**it.json**:
+```json
+{
+  "Menu:Recipes": "Ricette",
+  "Menu:ListRecipes": "Elenco Ricette",
+  "Menu:CrudRecipes": "CRUD Ricetta"
+}
+```
+
+### 07.11 - Summary
+
+In this chapter, we created a new module for managing recipes, added components for listing and editing recipes, configured routing, and set up menu navigation. We also introduced localization to support multiple languages, enhancing the usability of the application for different users. By following these steps, you have laid the groundwork for a modular, navigable, and multilingual application.
