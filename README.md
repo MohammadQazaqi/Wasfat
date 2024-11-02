@@ -950,12 +950,12 @@ npx ng generate module recipes --routing
 
 This will generate the `recipes` folder structure with a module file (`recipes.module.ts`) and a routing module (`recipes-routing.module.ts`).
 
-### 07.05 - Generating the List Recipes Component
+### 07.05 - Generating the Recipes List Component
 
 Generate the `ListRecipes` component inside the `recipes` module. This component will display a list of all available recipes:
 
 ```bash
-npx ng generate component recipes/list-recipes
+npx ng generate component recipes/recipes-list
 ```
 
 This command creates `list-recipes.component.ts`, `list-recipes.component.html`, and `list-recipes.component.css`.
