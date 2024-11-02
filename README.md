@@ -934,7 +934,7 @@ In this chapter, you will learn how to create a new module in an Angular applica
 - **`Localization`**: Localization allows the application to display text in different languages, enhancing usability for a multilingual audience. Localized text is typically defined in JSON files for each supported language.
 
 
-### 07.03 - Setting Up `admin.angular` by original fresh `angular`
+### 07.03 - Setting Up admin.angular
 
 To set up an administration portal distinct from the public-facing site, we will create a separate Angular application named `admin.angular`. This application will serve as the front end for managing domain and administration tasks, while another copy of the the original Angular application will be used for the public site later on, where customers can browse the website and interact with public-facing features.
 
@@ -947,7 +947,7 @@ By separating these applications, we can maintain a clear distinction between ad
    Move `node_modules` out of `angular` to avoid copying this large directory. This will reduce time and space during the copying process.
 
    ```bash
-   mv angular/node_modules ../node_modules_temp
+   mv .\angular\node_modules .\node_modules
    ```
 
 2. **Rename `angular` to `fresh.angular`**  
@@ -955,7 +955,7 @@ By separating these applications, we can maintain a clear distinction between ad
    Use `git mv` to rename `angular` to `fresh.angular`:
 
    ```bash
-   git mv angular fresh.angular
+   git mv .\angular\ .\fresh.angular\
    ```
 
 3. **Copy `fresh.angular` to Create `admin.angular`** 
@@ -963,7 +963,7 @@ By separating these applications, we can maintain a clear distinction between ad
    Copy the `fresh.angular` directory to create `admin.angular`.
 
    ```bash
-   cp -r fresh.angular admin.angular
+   cp -r .\fresh.angular\ .\admin.angular\
    ```
 
 4. **Move `node_modules` into `admin.angular`**  
@@ -971,7 +971,7 @@ By separating these applications, we can maintain a clear distinction between ad
    Return the `node_modules` directory to `admin.angular` to restore dependencies for the new admin application:
 
    ```bash
-   mv ../node_modules_temp admin.angular/node_modules
+   mv .\node_modules .\admin.angular\node_modules
    ```
 
 This setup provides separate Angular applications for public and admin purposes, each with clear functionality boundaries, and avoids unnecessary duplication of `node_modules` during the copy process.
