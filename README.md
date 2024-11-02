@@ -952,13 +952,13 @@ This will generate the `recipes` folder structure with a module file (`recipes.m
 
 ### 07.05 - Generating the Recipes List Component
 
-Generate the `ListRecipes` component inside the `recipes` module. This component will display a list of all available recipes:
+Generate the `RecipesList` component inside the `recipes` module. This component will display a list of all available recipes:
 
 ```bash
 npx ng generate component recipes/recipes-list
 ```
 
-This command creates `list-recipes.component.ts`, `list-recipes.component.html`, and `list-recipes.component.css`.
+This command creates `recipes-list.component.ts`, `recipes-list.component.html`, and `recipes-list.component.css`.
 
 ### 07.06 - Generating the CRUD Recipe Component
 
@@ -984,13 +984,13 @@ In `app-routing.module.ts`, configure the main route for the `recipes` module.
 
 ### 07.08 - Routing Inside the Recipes Module
 
-Define specific routes for the `ListRecipes` and `CrudRecipe` components in `recipes-routing.module.ts`:
+Define specific routes for the `RecipesList` and `CrudRecipe` components in `recipes-routing.module.ts`:
 
 ```typescript
 const routes: Routes = [
   { 
    path: 'list', 
-   component: ListRecipesComponent 
+   component: RecipesListComponent 
   },
   { 
    path: 'crud', 
@@ -1013,7 +1013,7 @@ Configure menus in `route.provider.ts` to provide navigation options for the rec
 },
 {
   path: '/recipes/list',
-  name: '::Menu:ListRecipes',
+  name: '::Menu:RecipesList',
   parentName: '::Menu:Recipes',
   iconClass: 'fas fa-bars',
   order: 1,
@@ -1038,7 +1038,7 @@ To support multiple languages, add localization entries in JSON files, like `en.
 ```json
 {
   "Menu:Recipes": "Recipes",
-  "Menu:ListRecipes": "List Recipes",
+  "Menu:RecipesList": "Recipes List",
   "Menu:CrudRecipes": "CRUD Recipe"
 }
 ```
@@ -1047,7 +1047,7 @@ To support multiple languages, add localization entries in JSON files, like `en.
 ```json
 {
   "Menu:Recipes": "Ricette",
-  "Menu:ListRecipes": "Elenco Ricette",
+  "Menu:RecipesList": "Elenco Ricette",
   "Menu:CrudRecipes": "CRUD Ricetta"
 }
 ```
