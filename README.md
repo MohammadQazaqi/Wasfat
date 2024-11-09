@@ -1312,7 +1312,7 @@ Location:
 
 ```
 
-### 08.12 - Importing `ThemeSharedModule`
+### 08.12 - Importing `Theme Shared Module`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes.module.ts`: > `@NgModule` > `imports`
