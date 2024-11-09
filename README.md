@@ -1138,14 +1138,12 @@ To support multiple languages, add localization entries in JSON files, like `en.
 
 In this chapter, we created a new module for managing recipes, added components for listing and editing recipes, configured routing, and set up menu navigation. We also introduced localization to support multiple languages, enhancing the usability of the application for different users. By following these steps, you have laid the groundwork for a modular, navigable, and multilingual application.
 
-
+---
 
 ## 08 - Building the Recipes List Component
 
 ### 08.01 - What You Will Learn in This Chapter  
 In this chapter, you will learn how to fetch data from the backend and display it in a table using the **ngx-datatable** component. By the end of this chapter, you’ll have a working recipes list component that retrieves data and displays it in a tabular format.
-
----
 
 ### 08.02 - Terminology  
 - **`Endpoint`**: A backend method that can be called from the frontend via HTTP to perform operations like retrieving or updating data.  
@@ -1153,7 +1151,6 @@ In this chapter, you will learn how to fetch data from the backend and display i
 - **`Dependency Injection`**: A design pattern used in Angular to provide services or objects to components.  
 - **`Ngx-datatable`**: A powerful Angular library for building data tables.
 
----
 
 ### 08.03 - Creating the (Get All Recipes) Endpoint
 
@@ -1168,7 +1165,6 @@ public async Task<List<RecipeDto>> GetAllAsync()
 }
 ```
 
----
 
 ### 08.04 - Adding the (Get All Recipes) Method to the Interface
 
@@ -1179,7 +1175,6 @@ Location:
 Task<List<RecipeDto>> GetAllAsync();
 ```
 
----
 
 ### 08.05 - Generating Proxy in the Frontend
 
@@ -1189,7 +1184,6 @@ Run the following command to update your Angular service proxy:
 abp generate-proxy -t ng
 ```
 
----
 
 ### 08.06 - Defining My `Recipes` Variable
 
@@ -1206,7 +1200,6 @@ recipes: RecipeDto[] = [];
 import { RecipeDto } from '@proxy/recipes';
 ```
 
----
 
 ### 08.07 - Injecting the `RecipeAdminService`
 
@@ -1223,7 +1216,6 @@ constructor(private recipeAdminService: RecipeAdminService) {}
 import { RecipeAdminService } from '@proxy/recipes';
 ```
 
----
 
 ### 08.08 - Implementing `ngOnInit`
 
@@ -1236,7 +1228,6 @@ ngOnInit(): void {
 }
 ```
 
----
 
 ### 08.09 - Getting All Recipes in the Frontend
 
@@ -1252,7 +1243,6 @@ ngOnInit(): void {
 }
 ```
 
----
 
 ### 08.10 - Installing ngx-datatable
 
@@ -1262,7 +1252,6 @@ Run the following command to install **ngx-datatable**:
 npm install @swimlane/ngx-datatable
 ```
 
----
 
 ### 08.11 - Importing `NgxDatatableModule`
 
@@ -1285,7 +1274,6 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 export class AppModule {}
 ```
 
----
 
 ### 08.12 - Updating the HTML File
 
@@ -1304,7 +1292,6 @@ Location:
 </ngx-datatable>
 ```
 
----
 
 ### 08.13 - Summary
 
