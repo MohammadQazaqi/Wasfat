@@ -1158,11 +1158,14 @@ Location:
 `src`\\`Wasfat.Application`\\`Recipes`\\`RecipeAdminAppService.cs`:
 
 ```csharp
-public async Task<List<RecipeDto>> GetAllAsync()
-{
-    var recipes = await _recipesRepository.GetListAsync(); // Fetch all recipes
-    return ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes); // Map to DTOs
-}
+        public async Task<List<RecipeDto>> GetAllRecipesAsync()
+        {
+            var recipes = await _recipesRepository.GetListAsync();
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+            return recipeDtos;
+        }
 ```
 
 
@@ -1172,7 +1175,7 @@ Location:
 `src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
 
 ```csharp
-Task<List<RecipeDto>> GetAllAsync();
+        Task<List<RecipeDto>> GetAllRecipesAsync();
 ```
 
 
@@ -1200,8 +1203,18 @@ recipes: RecipeDto[] = [];
 import { RecipeDto } from '@proxy/recipes';
 ```
 
+### 08.07 - Creating The Constructor  
 
-### 08.07 - Injecting the `RecipeAdminService`
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+   constructor() {}
+```
+
+Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
+
+### 08.08 - Injecting the `RecipeAdminService`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
@@ -1217,10 +1230,15 @@ import { RecipeAdminService } from '@proxy/recipes';
 ```
 
 
-### 08.08 - Implementing `ngOnInit`
+### 08.09 - Implementing `ngOnInit`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+      implements OnInit
+```
+
 
 ```typescript
 ngOnInit(): void {
@@ -1229,22 +1247,22 @@ ngOnInit(): void {
 ```
 
 
-### 08.09 - Getting All Recipes in the Frontend
+### 08.10 - Getting All Recipes in the Frontend
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```typescript
-ngOnInit(): void {
-  this.recipeAdminService.getAll().subscribe((receivedRecipes: RecipeDto[]) => {
-    this.recipes = receivedRecipes;
-    console.log('My Recipes:', this.recipes);
-  });
-}
+
+   this.recipeAdminSvc.getAllRecipes().subscribe(receivedRecipes => {
+      this.recipes = receivedRecipes;
+      console.log('My Recipes:', this.recipes);
+   });
+
 ```
 
 
-### 08.10 - Installing ngx-datatable
+### 08.11 - Installing ngx-datatable
 
 Run the following command to install **ngx-datatable**:
 
@@ -1253,7 +1271,7 @@ npm install @swimlane/ngx-datatable
 ```
 
 
-### 08.11 - Importing `NgxDatatableModule`
+### 08.12 - Importing `NgxDatatableModule`
 
 Location:  
 `src`\\`app`\\`app.module.ts`:
@@ -1275,7 +1293,7 @@ export class AppModule {}
 ```
 
 
-### 08.12 - Updating the HTML File
+### 08.13 - Updating the HTML File
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.html`:
@@ -1293,7 +1311,7 @@ Location:
 ```
 
 
-### 08.13 - Summary
+### 08.14 - Summary
 
 In this chapter, you learned how to:
 1. Create a backend endpoint to fetch all recipes.
