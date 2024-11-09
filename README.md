@@ -1190,38 +1190,22 @@ abp generate-proxy -t ng
 
 ### 08.06 - Defining My `Recipes` Variable
 
+Declare the recipes array inside the `RecipesListComponent` class
+
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```typescript
 recipes: RecipeDto[] = [];
-// There is another way to declare
-// recipes: Array<RecipeDto> = [];
-
 ```
-**⚠️ Note :**
-> The import should be added automatically by VSCode:
 
 ```typescript
 import { RecipeDto } from '@proxy/recipes';
 ```
 
- **Comparison: `Array<T>` vs C# `List<T>`**
-
-| **Feature**         | **TypeScript `Array<T>`**     | **C# `List<T>`**            | **C# `Array`**            |
-|----------------------|-------------------------------|-----------------------------|---------------------------|
-| **Dynamic resizing** | Yes                           | Yes                         | No                        |
-| **Generic support**  | Yes (`Array<T>`)              | Yes (`List<T>`)             | No (fixed type, e.g., `int[]`) |
-| **Add elements**     | `push()`                      | `Add()`                     | Not supported             |
-| **Remove elements**  | `splice()` or `filter()`      | `Remove()`, `RemoveAt()`    | Not supported             |
-| **Iterate**          | `for`, `forEach`, `map`       | `foreach`, LINQ methods     | `for`, `foreach`          |
-| **Default Value**    | No                            | No                          | Yes (default initialized) |
-| **Performance**      | Good for dynamic data         | Optimized for dynamic data  | Optimized for fixed size  |
-| **Index Access**     | Yes                           | Yes                         | Yes                       |
-| **Sorting**          | `sort()`                      | `Sort()`                    | `Array.Sort()`            |
-
-
 ### 08.07 - Creating the Constructor if It Does Not Exist
+
+Add the constructor function inside the `RecipesListComponent` class
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
@@ -1238,15 +1222,10 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```typescript
-constructor(private recipeAdminService: RecipeAdminService) {}
+private recipeAdminService: RecipeAdminService
 ```
 
-> **Note**: The import will be added automatically by VSCode:
-
-```typescript
-import { RecipeAdminService } from '@proxy/recipes';
-```
-
+constructor(``private recipeAdminService: RecipeAdminService``) {}
 
 ### 08.09 - Implementing `ngOnInit`
 
@@ -1256,6 +1235,9 @@ Location:
 ```typescript
       implements OnInit
 ```
+
+export class RecipesListComponent ``implements OnInit`` {
+
 
 
 ```typescript
