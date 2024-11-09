@@ -1199,20 +1199,22 @@ Location:
 recipes: RecipeDto[] = [];
 ```
 
-```typescript
-import { RecipeDto } from '@proxy/recipes';
-```
+export class RecipesListComponent implements OnInit {
+  ``recipes: Array<RecipeDto> = [];``
 
 ### 08.07 - Creating the Constructor if It Does Not Exist
 
-Add the constructor function inside the `RecipesListComponent` class
-
 Location:  
-`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `RecipesListComponent`
 
 ```typescript
    constructor() {}
 ```
+
+export class RecipesListComponent implements OnInit {
+  recipes: Array<RecipeDto> = [];
+
+  ``constructor() { }``
 
 Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
 
