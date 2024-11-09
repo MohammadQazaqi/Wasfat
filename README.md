@@ -1181,26 +1181,22 @@ Location:
 
 ### 08.05 - Generating Proxy in the Frontend
 
-Run the following command to update your Angular service proxy:
+Location:
+`PS `\\`Wasfat`\\`admin.angular`>
 
 ```bash
 abp generate-proxy -t ng
 ```
 
 
-### 08.06 - Defining My `Recipes` Variable
-
-Declare the recipes array inside the `RecipesListComponent` class
+### 08.06 - Declare The  `Recipes` Variable
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```typescript
-recipes: RecipeDto[] = [];
+  recipes: RecipeDto[] = [];
 ```
-
-export class RecipesListComponent implements OnInit {
-  ``recipes: Array<RecipeDto> = [];``
 
 ### 08.07 - Creating the Constructor if It Does Not Exist
 
@@ -1208,26 +1204,19 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `RecipesListComponent`
 
 ```typescript
-   constructor() {}
+  constructor() {}
 ```
-
-export class RecipesListComponent implements OnInit {
-  recipes: Array<RecipeDto> = [];
-
-  ``constructor() { }``
 
 Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
 
 ### 08.08 - Injecting the `RecipeAdminService`
 
 Location:  
-`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `constructor` > `parameters`
 
 ```typescript
 private recipeAdminService: RecipeAdminService
 ```
-
-constructor(``private recipeAdminService: RecipeAdminService``) {}
 
 ### 08.09 - Implementing `ngOnInit`
 
@@ -1235,12 +1224,8 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```typescript
-      implements OnInit
+ implements OnInit
 ```
-
-export class RecipesListComponent ``implements OnInit`` {
-
-
 
 ```typescript
 ngOnInit(): void {
@@ -1248,23 +1233,20 @@ ngOnInit(): void {
 }
 ```
 
-
 ### 08.10 - Getting All Recipes in the Frontend
 
 Location:  
-`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
 
 ```typescript
-  ngOnInit(): void {
-    console.log('Component initialized!');
-
+  
     this.recipeAdminSvc.getAllRecipes().subscribe(
       (receivedRecipes) => {
         this.recipes = receivedRecipes;
         console.log('My Recipes:', this.recipes);
       }
     );
-  }
+  
 ```
 
 ### 08.11 - Explaining Observable, Observer, & Subscription
@@ -1275,24 +1257,21 @@ Location:
 
 
 Location:  
-`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
 
 ```typescript
 
-  ngOnInit(): void {
-    console.log('Component initialized!');
+   const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
 
-    const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
-
-    const HandlingObserverFunction: (receivedRecipes: RecipeDto[]) => void
+   const HandlingObserverFunction: (receivedRecipes: RecipeDto[]) => void
       =
       (receivedRecipes: RecipeDto[]) => {
         this.recipes = receivedRecipes;
         console.log('My Recipes:', this.recipes);
       };
 
-    recipesObservable.subscribe(HandlingObserverFunction);
-  }
+   recipesObservable.subscribe(HandlingObserverFunction);
+  
 
 ```
 
@@ -1301,39 +1280,9 @@ Location:
 Location:  
 `src`\\`app`\\`recipes`\\`recipes.module.ts`: > `@NgModule` > `imports`
 
-
 ```
 ThemeSharedModule 
 ```
-
-The file should look like this
-
-```typescript
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-import { RecipesRoutingModule } from './recipes-routing.module';
-import { RecipesListComponent } from './recipes-list/recipes-list.component';
-import { CrudRecipeComponent } from './crud-recipe/crud-recipe.component';
-import { ThemeSharedModule } from '@abp/ng.theme.shared'; // Added automatically by VSCode or by using [Ctrl + .] shortcut.
-
-
-@NgModule({
-  declarations: [
-    RecipesListComponent,
-    CrudRecipeComponent,
-  ],
-  imports: [
-    CommonModule,
-    RecipesRoutingModule,
-    ThemeSharedModule   // Add this
-  ]
-})
-export class RecipesModule { }
-
-
-```
-
 
 ### 08.13 - Updating the HTML File
 
