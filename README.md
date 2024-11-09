@@ -1331,7 +1331,8 @@ import { CommonModule } from '@angular/common';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import { CrudRecipeComponent } from './crud-recipe/crud-recipe.component';
-import { ThemeSharedModule } from '@abp/ng.theme.shared'; // Added automatically by VSCode or using Ctrl + .
+import { ThemeSharedModule } from '@abp/ng.theme.shared'; // Added automatically by VSCode or by using [Ctrl + .] shortcut.
+
 
 @NgModule({
   declarations: [
