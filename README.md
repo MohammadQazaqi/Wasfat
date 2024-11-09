@@ -1275,7 +1275,7 @@ Location:
     console.log('Component initialized!');
 
     this.recipeAdminSvc.getAllRecipes().subscribe(
-      (receivedRecipes: RecipeDto[]) => {
+      (receivedRecipes) => {
         this.recipes = receivedRecipes;
         console.log('My Recipes:', this.recipes);
       }
@@ -1283,7 +1283,7 @@ Location:
   }
 ```
 
-### 08.11 - Explaining Observable, Observer & Subscription
+### 08.11 - Explaining Observable, Observer, & Subscription
 
 - **`Observable`**: A stream of data that emits values over time; in this case, it emits once, but in a video or audio stream, it could emit many values.  
 - **`Observer`**: A function that listens to the Observable and processes its emitted values.  
@@ -1312,35 +1312,27 @@ Location:
 
 ```
 
-
-### 08.11 - Installing ngx-datatable
-
-Run the following command to install **ngx-datatable**:
-
-```bash
-npm install @swimlane/ngx-datatable
-```
-
-
-### 08.12 - Importing `NgxDatatableModule`
+### 08.12 - Importing `ThemeSharedModule`
 
 Location:  
-`src`\\`app`\\`app.module.ts`:
+`src`\\`app`\\`recipes`\\`recipes.module.ts`:
 
-```typescript
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+```
+import { ThemeSharedModule } from '@abp/ng.theme.shared';
+
 
 @NgModule({
   declarations: [
-    // Your components
+    RecipesListComponent,
+    CrudRecipeComponent,
   ],
   imports: [
-    NgxDatatableModule, // Import NgxDatatableModule
-    // Other modules
-  ],
-  bootstrap: [AppComponent]
+    CommonModule,
+    RecipesRoutingModule,
+    ThemeSharedModule // Add the module here for shared UI components
+  ]
 })
-export class AppModule {}
+export class RecipesModule { }
 ```
 
 
@@ -1350,14 +1342,10 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.html`:
 
 ```html
-<ngx-datatable
-  [rows]="recipes"
-  [columns]="[
-    { prop: 'id', name: 'ID' },
-    { prop: 'name', name: 'Name' },
-    { prop: 'description', name: 'Description' }
-  ]"
->
+<ngx-datatable [rows]="recipes" default>
+  <ngx-datatable-column [name]="'ID'" prop="id"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'Name'" prop="name"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'Description'" prop="description"></ngx-datatable-column>
 </ngx-datatable>
 ```
 
