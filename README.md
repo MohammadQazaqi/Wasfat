@@ -1137,3 +1137,181 @@ To support multiple languages, add localization entries in JSON files, like `en.
 ### 07.11 - Summary
 
 In this chapter, we created a new module for managing recipes, added components for listing and editing recipes, configured routing, and set up menu navigation. We also introduced localization to support multiple languages, enhancing the usability of the application for different users. By following these steps, you have laid the groundwork for a modular, navigable, and multilingual application.
+
+
+
+## 08 - Building the Recipes List Component
+
+### 08.01 - What You Will Learn in This Chapter  
+In this chapter, you will learn how to fetch data from the backend and display it in a table using the **ngx-datatable** component. By the end of this chapter, you’ll have a working recipes list component that retrieves data and displays it in a tabular format.
+
+---
+
+### 08.02 - Terminology  
+- **`Endpoint`**: A backend method that can be called from the frontend via HTTP to perform operations like retrieving or updating data.  
+- **`NgOnInit`**: A lifecycle hook in Angular that is called once the component is initialized.  
+- **`Dependency Injection`**: A design pattern used in Angular to provide services or objects to components.  
+- **`Ngx-datatable`**: A powerful Angular library for building data tables.
+
+---
+
+### 08.03 - Creating the (Get All Recipes) Endpoint
+
+Location:  
+`src`\\`Wasfat.Application`\\`Recipes`\\`RecipeAdminAppService.cs`:
+
+```csharp
+public async Task<List<RecipeDto>> GetAllAsync()
+{
+    var recipes = await _recipesRepository.GetListAsync(); // Fetch all recipes
+    return ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes); // Map to DTOs
+}
+```
+
+---
+
+### 08.04 - Adding the (Get All Recipes) Method to the Interface
+
+Location:  
+`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
+
+```csharp
+Task<List<RecipeDto>> GetAllAsync();
+```
+
+---
+
+### 08.05 - Generating Proxy in the Frontend
+
+Run the following command to update your Angular service proxy:
+
+```bash
+abp generate-proxy -t ng
+```
+
+---
+
+### 08.06 - Defining My `Recipes` Variable
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+recipes: RecipeDto[] = [];
+```
+
+> **Note**: The import should be added automatically by VSCode:
+
+```typescript
+import { RecipeDto } from '@proxy/recipes';
+```
+
+---
+
+### 08.07 - Injecting the `RecipeAdminService`
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+constructor(private recipeAdminService: RecipeAdminService) {}
+```
+
+> **Note**: The import will be added automatically by VSCode:
+
+```typescript
+import { RecipeAdminService } from '@proxy/recipes';
+```
+
+---
+
+### 08.08 - Implementing `ngOnInit`
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+ngOnInit(): void {
+  console.log('Component initialized!');
+}
+```
+
+---
+
+### 08.09 - Getting All Recipes in the Frontend
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+ngOnInit(): void {
+  this.recipeAdminService.getAll().subscribe((receivedRecipes: RecipeDto[]) => {
+    this.recipes = receivedRecipes;
+    console.log('My Recipes:', this.recipes);
+  });
+}
+```
+
+---
+
+### 08.10 - Installing ngx-datatable
+
+Run the following command to install **ngx-datatable**:
+
+```bash
+npm install @swimlane/ngx-datatable
+```
+
+---
+
+### 08.11 - Importing `NgxDatatableModule`
+
+Location:  
+`src`\\`app`\\`app.module.ts`:
+
+```typescript
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+
+@NgModule({
+  declarations: [
+    // Your components
+  ],
+  imports: [
+    NgxDatatableModule, // Import NgxDatatableModule
+    // Other modules
+  ],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+---
+
+### 08.12 - Updating the HTML File
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.html`:
+
+```html
+<ngx-datatable
+  [rows]="recipes"
+  [columns]="[
+    { prop: 'id', name: 'ID' },
+    { prop: 'name', name: 'Name' },
+    { prop: 'description', name: 'Description' }
+  ]"
+>
+</ngx-datatable>
+```
+
+---
+
+### 08.13 - Summary
+
+In this chapter, you learned how to:
+1. Create a backend endpoint to fetch all recipes.
+2. Add the new method to the service interface.
+3. Generate proxies for frontend usage.
+4. Retrieve and display the data in the Angular component using **ngx-datatable**.
+
+By the end of this chapter, you now have a functional recipes list component that fetches and displays data in a simple table. In future chapters, we’ll enhance this table with sorting, filtering, and pagination.
