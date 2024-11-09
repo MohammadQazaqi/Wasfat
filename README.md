@@ -1195,15 +1195,33 @@ Location:
 
 ```typescript
 recipes: RecipeDto[] = [];
-```
+// There is another way to declare
+// recipes: Array<RecipeDto> = [];
 
-> **Note**: The import should be added automatically by VSCode:
+```
+**⚠️ Note :**
+> The import should be added automatically by VSCode:
 
 ```typescript
 import { RecipeDto } from '@proxy/recipes';
 ```
 
-### 08.07 - Creating The Constructor  
+ **Comparison: `Array<T>` vs C# `List<T>`**
+
+| **Feature**         | **TypeScript `Array<T>`**     | **C# `List<T>`**            | **C# `Array`**            |
+|----------------------|-------------------------------|-----------------------------|---------------------------|
+| **Dynamic resizing** | Yes                           | Yes                         | No                        |
+| **Generic support**  | Yes (`Array<T>`)              | Yes (`List<T>`)             | No (fixed type, e.g., `int[]`) |
+| **Add elements**     | `push()`                      | `Add()`                     | Not supported             |
+| **Remove elements**  | `splice()` or `filter()`      | `Remove()`, `RemoveAt()`    | Not supported             |
+| **Iterate**          | `for`, `forEach`, `map`       | `foreach`, LINQ methods     | `for`, `foreach`          |
+| **Default Value**    | No                            | No                          | Yes (default initialized) |
+| **Performance**      | Good for dynamic data         | Optimized for dynamic data  | Optimized for fixed size  |
+| **Index Access**     | Yes                           | Yes                         | Yes                       |
+| **Sorting**          | `sort()`                      | `Sort()`                    | `Array.Sort()`            |
+
+
+### 08.07 - Creating the Constructor if It Does Not Exist
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
@@ -1253,11 +1271,44 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```typescript
+  ngOnInit(): void {
+    console.log('Component initialized!');
 
-   this.recipeAdminSvc.getAllRecipes().subscribe(receivedRecipes => {
-      this.recipes = receivedRecipes;
-      console.log('My Recipes:', this.recipes);
-   });
+    this.recipeAdminSvc.getAllRecipes().subscribe(
+      (receivedRecipes: RecipeDto[]) => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      }
+    );
+  }
+```
+
+### 08.11 - Explaining Observable, Observer & Subscription
+
+- **`Observable`**: A stream of data that emits values over time; in this case, it emits once, but in a video or audio stream, it could emit many values.  
+- **`Observer`**: A function that listens to the Observable and processes its emitted values.  
+- **`Subscription`**: A connection that starts the data flow from the Observable to the Observer.  
+
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+
+  ngOnInit(): void {
+    console.log('Component initialized!');
+
+    const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
+
+    const HandlingObserverFunction: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]) => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      };
+
+    recipesObservable.subscribe(HandlingObserverFunction);
+  }
 
 ```
 
