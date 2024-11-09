@@ -1315,10 +1315,23 @@ Location:
 ### 08.12 - Importing `ThemeSharedModule`
 
 Location:  
-`src`\\`app`\\`recipes`\\`recipes.module.ts`:
+`src`\\`app`\\`recipes`\\`recipes.module.ts`: > @NgModule > imports
 
+
+```typescript
+ThemeSharedModule 
 ```
-import { ThemeSharedModule } from '@abp/ng.theme.shared';
+
+The file should look like this
+
+```typescript
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { RecipesRoutingModule } from './recipes-routing.module';
+import { RecipesListComponent } from './recipes-list/recipes-list.component';
+import { CrudRecipeComponent } from './crud-recipe/crud-recipe.component';
+import { ThemeSharedModule } from '@abp/ng.theme.shared'; // Added this 
 
 
 @NgModule({
@@ -1329,10 +1342,11 @@ import { ThemeSharedModule } from '@abp/ng.theme.shared';
   imports: [
     CommonModule,
     RecipesRoutingModule,
-    ThemeSharedModule // Add the module here for shared UI components
+    ThemeSharedModule   // Added this 
   ]
 })
 export class RecipesModule { }
+
 ```
 
 
