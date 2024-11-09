@@ -1318,7 +1318,7 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes.module.ts`: > `@NgModule` > `imports`
 
 
-```typescript
+```
 ThemeSharedModule 
 ```
 
