@@ -10,7 +10,7 @@ export class RecipesListComponent implements OnInit {
 
   recipes: RecipeDto[] = []
 
-  constructor() {
+  constructor(private recipeAdminSvc: RecipeAdminService) {
     console.log('RecipesListComponent > constructor');
 
   }
@@ -18,6 +18,8 @@ export class RecipesListComponent implements OnInit {
   ngOnInit(): void {
     console.log('RecipesListComponent > ngOnInit');
 
+    this.recipeAdminSvc.
+    
   }
 
 }
