@@ -1210,7 +1210,24 @@ Location:
 
 Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
 
-### 08.08 - Injecting the `RecipeAdminService`
+### 08.08 - Implementing `ngOnInit`
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+ implements OnInit
+```
+
+```typescript
+ngOnInit(): void {
+  console.log('RecipesListComponent > ngOnInit!');
+}
+```
+**⚠️ Note :**
+> The constructor initializes the class and injects dependencies, while `ngOnInit` is used for setup logic that depends on the component being fully initialized.
+
+### 08.09 - Injecting the `RecipeAdminService`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `constructor` > `parameters`
@@ -1229,21 +1246,6 @@ long version
 short version
 ```typescript
 private recipeAdminService: RecipeAdminService
-```
-
-### 08.09 - Implementing `ngOnInit`
-
-Location:  
-`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
-
-```typescript
- implements OnInit
-```
-
-```typescript
-ngOnInit(): void {
-  console.log('RecipesListComponent > ngOnInit!');
-}
 ```
 
 ### 08.10 - Getting All Recipes in the Frontend
