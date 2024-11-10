@@ -1146,7 +1146,6 @@ In this chapter, we created a new module for managing recipes, added components 
 In this chapter, you will learn how to fetch data from the backend and display it in a table using the **ngx-datatable** component. By the end of this chapter, you’ll have a working recipes list component that retrieves data and displays it in a tabular format.
 
 ### 08.02 - Terminology  
-- **`Endpoint`**: A backend method that can be called from the frontend via HTTP to perform operations like retrieving or updating data.  
 - **`NgOnInit`**: A lifecycle hook in Angular that is called once the component is initialized.  
 - **`Dependency Injection`**: A design pattern used in Angular to provide services or objects to components.  
 - **`Ngx-datatable`**: A powerful Angular library for building data tables.
