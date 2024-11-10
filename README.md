@@ -1215,6 +1215,18 @@ Explanation: The constructor is used to initialize the component. For now, it's 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `constructor` > `parameters`
 
+long version
+```typescript
+  private recipeAdminSvc: RecipeAdminService
+
+  constructor(recipeAdminService: RecipeAdminService) {
+    console.log('RecipesListComponent > constructor');
+
+    this.recipeAdminSvc = recipeAdminService;
+  }
+```
+
+short version
 ```typescript
 private recipeAdminService: RecipeAdminService
 ```
