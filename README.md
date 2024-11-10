@@ -1248,7 +1248,63 @@ short version
 private recipeAdminService: RecipeAdminService
 ```
 
-### 08.10 - Getting All Recipes to the Frontend
+### 08.10 - What is an  Arrow Function
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+Traditional Function
+
+```typescript
+handleRecipes(receivedRecipes: RecipeDto[]): void {
+    this.recipes = receivedRecipes;
+    console.log('My Recipes:', this.recipes);
+} 
+```
+
+Arrow Function
+```typescript
+   const RecipesHandler: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]) => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      };
+```
+
+### 08.11 - What is an Observable
+
+| **Aspect**            | **`RecipeDto`**                      | **`RecipeDto[]`**                     | **`Observable<RecipeDto[]>`**         |
+|-----------------------|---------------------------------------|---------------------------------------|---------------------------------------|
+| **Definition**         | Represents a single recipe object    | Represents a group of `RecipeDto` objects stored sequentially | Represents a sequence that emits an array of `RecipeDto` objects, either once or multiple times asynchronously. |
+| **Purpose**            | Holds data for a single recipe       | Holds multiple `RecipeDto` objects    | Streams arrays of `RecipeDto` objects over time, supporting reactive programming. |
+| **Emit Type**          | Not applicable                       | Not applicable                        | Can emit a single array (e.g., API fetch) or multiple arrays (e.g., real-time updates). |
+| **Synchronous/Asynchronous** | Synchronous                   | Synchronous                           | Asynchronous, emits data when available. |
+| **When to Use?**       | When you need to work with a single recipe | When multiple `RecipeDto` objects need to be managed together | When recipe data needs to be fetched asynchronously or streamed over time. |
+
+
+### 08.12 - Getting All Recipes to the Frontend
+
+- **`Observable`**: A stream of data that emits values over time; in this case, it emits once, but in a video or audio stream, it could emit many values.  
+- **`Observer`**: A function that listens to the Observable and processes its emitted values.  
+- **`Subscription`**: A connection that starts the data flow from the Observable to the Observer.  
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
+
+```typescript
+   const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
+
+   const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]) => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      };
+
+   recipesObservable.subscribe(recipesHandler);
+```
+### 08.13 - How Programers Usually Use Proxy Observables
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
@@ -1264,33 +1320,7 @@ Location:
   
 ```
 
-### 08.11 - Explaining Observable, Observer, & Subscription
-
-- **`Observable`**: A stream of data that emits values over time; in this case, it emits once, but in a video or audio stream, it could emit many values.  
-- **`Observer`**: A function that listens to the Observable and processes its emitted values.  
-- **`Subscription`**: A connection that starts the data flow from the Observable to the Observer.  
-
-
-Location:  
-`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
-
-```typescript
-
-   const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
-
-   const HandlingObserverFunction: (receivedRecipes: RecipeDto[]) => void
-      =
-      (receivedRecipes: RecipeDto[]) => {
-        this.recipes = receivedRecipes;
-        console.log('My Recipes:', this.recipes);
-      };
-
-   recipesObservable.subscribe(HandlingObserverFunction);
-  
-
-```
-
-### 08.12 - Importing `Theme Shared Module`
+### 08.14 - Importing `Theme Shared Module`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes.module.ts`: > `@NgModule` > `imports`
@@ -1299,7 +1329,7 @@ Location:
 ThemeSharedModule 
 ```
 
-### 08.13 - Updating the HTML File
+### 08.15 - Updating the HTML File
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.html`:
@@ -1313,7 +1343,7 @@ Location:
 ```
 
 
-### 08.14 - Summary
+### 08.16 - Summary
 
 In this chapter, you learned how to:
 1. Create a backend endpoint to fetch all recipes.
