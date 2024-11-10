@@ -1210,7 +1210,7 @@ Location:
 
 Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
 
-### 08.08 - Implementing `ngOnInit`
+### 08.08 - Implementing `OnInit`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
@@ -1248,7 +1248,7 @@ short version
 private recipeAdminService: RecipeAdminService
 ```
 
-### 08.10 - Getting All Recipes in the Frontend
+### 08.10 - Getting All Recipes to the Frontend
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
