@@ -1,1 +1,6 @@
-<p>recipes-list works really well!</p>
+<ngx-datatable [rows]="recipes" default>
+  <ngx-datatable-column [name]="'ID'" prop="id"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'Name'" prop="name"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'Description'" prop="description"></ngx-datatable-column>
+</ngx-datatable>
+
