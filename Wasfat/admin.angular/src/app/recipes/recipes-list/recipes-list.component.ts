@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RecipeDto } from '@proxy/recipes';
+import { RecipeAdminService, RecipeDto } from '@proxy/recipes';
 
 @Component({
   selector: 'app-recipes-list',
@@ -9,5 +9,11 @@ import { RecipeDto } from '@proxy/recipes';
 export class RecipesListComponent {
 
   recipes: RecipeDto[] = []
+
+  constructor() {
+    console.log('RecipesListComponent > constructor');
+
+  }
+
 
 }
