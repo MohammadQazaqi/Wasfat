@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RecipeAdminService, RecipeDto } from '@proxy/recipes';
 
 @Component({
@@ -6,7 +6,7 @@ import { RecipeAdminService, RecipeDto } from '@proxy/recipes';
   templateUrl: './recipes-list.component.html',
   styleUrls: ['./recipes-list.component.scss']
 })
-export class RecipesListComponent {
+export class RecipesListComponent implements OnInit {
 
   recipes: RecipeDto[] = []
 
@@ -15,5 +15,9 @@ export class RecipesListComponent {
 
   }
 
+  ngOnInit(): void {
+    console.log('RecipesListComponent > ngOnInit');
+
+  }
 
 }
