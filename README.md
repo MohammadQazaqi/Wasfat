@@ -1204,7 +1204,9 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `RecipesListComponent`
 
 ```typescript
-  constructor() {}
+  constructor() {
+    console.log('RecipesListComponent > constructor');
+  }
 ```
 
 Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
@@ -1229,7 +1231,7 @@ Location:
 
 ```typescript
 ngOnInit(): void {
-  console.log('Component initialized!');
+  console.log('RecipesListComponent > ngOnInit!');
 }
 ```
 
