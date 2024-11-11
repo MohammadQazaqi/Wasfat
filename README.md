@@ -1287,7 +1287,7 @@ A company makes an agreement with you to test their recipes and provide feedback
 - **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
 
 
-**Comparison Table**
+### 08.12 - RecipeDto VS RecipeDto[] VS Observable<RecipeDto[]>
 
 | **Aspect**            | **`RecipeDto`**                      | **`RecipeDto[]`**                     | **`Observable<RecipeDto[]>`**         |
 |-----------------------|---------------------------------------|---------------------------------------|---------------------------------------|
@@ -1298,7 +1298,7 @@ A company makes an agreement with you to test their recipes and provide feedback
 | **When to Use?**       | When you need to work with a single recipe | When multiple `RecipeDto` objects need to be managed together | When recipe data needs to be fetched asynchronously or streamed over time. |
 
 
-### 08.12 - Getting All Recipes to the Frontend
+### 08.13 - Getting All Recipes to the Frontend
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
@@ -1319,7 +1319,7 @@ Location:
    // The Agreement 
    recipesObservable.subscribe(recipesHandler);
 ```
-### 08.13 - How Programmers Usually Use Proxy Observables
+### 08.14 - How Programmers Usually Use Proxy Observables
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
@@ -1335,7 +1335,7 @@ Location:
   
 ```
 
-### 08.14 - Importing `Theme Shared Module`
+### 08.15 - Importing `Theme Shared Module`
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes.module.ts`: > `@NgModule` > `imports`
@@ -1344,7 +1344,7 @@ Location:
 ThemeSharedModule 
 ```
 
-### 08.15 - Updating the HTML File
+### 08.16 - Updating the HTML File
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.html`:
@@ -1358,7 +1358,7 @@ Location:
 ```
 
 
-### 08.16 - Summary
+### 08.17 - Summary
 
 In this chapter, you learned how to:
 1. Create a backend endpoint to fetch all recipes.
