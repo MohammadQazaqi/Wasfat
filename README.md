@@ -1248,7 +1248,7 @@ short version
 private recipeAdminService: RecipeAdminService
 ```
 
-### 08.10 - Traditional Function VS  Arrow Function
+### 08.10 - Arrow Functions
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
