@@ -1306,20 +1306,16 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
 
 ```typescript
+    const recipesObservable = this.recipeAdminSvc.getAllRecipes();
 
-   // The Observable Bundle of recipes (in our case all recipes once (Single Emit) )
-   const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
-
-   // The Observer (the handling process)
-   const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+    const recipesHandlerObserver: (receivedRecipes: RecipeDto[]) => void
       =
-      (receivedRecipes: RecipeDto[]) => {
+      (receivedRecipes: RecipeDto[]): void => {
         this.recipes = receivedRecipes;
         console.log('My Recipes:', this.recipes);
       };
 
-   // The Agreement 
-   recipesObservable.subscribe(recipesHandler);
+    recipesObservable.subscribe(recipesHandlerObserver);
 ```
 ### 08.14 - How Programmers Usually Use Proxy Observables
 
