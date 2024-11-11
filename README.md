@@ -1272,11 +1272,11 @@ Arrow Function
       };
 ```
 
-### 08.11 - What is an Observable
+### 08.11 - Observable, Subscription, Data emitted, & Observer
 
 An Observable is like a stream of data that you can watch and react to.
 
-#### **Clarifying Story**
+**Clarifying Story**
 
 A company makes an agreement with you to test their recipes and provide feedback. Every week, they send you a bundle of recipes to try. Once the bundle arrives, you eat and try dishes such as Pasta, Pizza, and Salad, and evaluate each one. After testing, you provide your feedback for the bundle as a whole: either an "Adopt" if you think the bundle is good or "Reject" if it doesn't meet the standards.  
 
@@ -1286,7 +1286,7 @@ A company makes an agreement with you to test their recipes and provide feedback
 - **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
 
 
-#### **Comparison Table**
+**Comparison Table**
 
 | **Aspect**            | **`RecipeDto`**                      | **`RecipeDto[]`**                     | **`Observable<RecipeDto[]>`**         |
 |-----------------------|---------------------------------------|---------------------------------------|---------------------------------------|
