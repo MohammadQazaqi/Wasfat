@@ -1234,12 +1234,8 @@ Location:
 
 long version
 ```typescript
-  private recipeAdminSvc: RecipeAdminService
-
-  constructor(recipeAdminService: RecipeAdminService) {
+  constructor(private recipeAdminSvc: RecipeAdminService) {
     console.log('RecipesListComponent > constructor');
-
-    this.recipeAdminSvc = recipeAdminService;
   }
 ```
 
