@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import { CrudRecipeComponent } from './crud-recipe/crud-recipe.component';
+import { ThemeSharedModule } from '@abp/ng.theme.shared';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { CrudRecipeComponent } from './crud-recipe/crud-recipe.component';
   ],
   imports: [
     CommonModule,
-    RecipesRoutingModule
+    RecipesRoutingModule,
+    ThemeSharedModule
   ]
 })
 export class RecipesModule { }
