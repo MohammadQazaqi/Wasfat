@@ -1287,7 +1287,9 @@ A company makes an agreement with you to test their recipes and provide feedback
 - **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
 
 
-### 08.12 - RecipeDto VS RecipeDto[] VS Observable<RecipeDto[]>
+### 08.12 - RecipeDto, RecipeDto[], & Observable<RecipeDto[]>
+
+**Comparison Table**
 
 | **Aspect**            | **`RecipeDto`**                      | **`RecipeDto[]`**                     | **`Observable<RecipeDto[]>`**         |
 |-----------------------|---------------------------------------|---------------------------------------|---------------------------------------|
