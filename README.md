@@ -1264,12 +1264,13 @@ Traditional Function
 
 Arrow Function
 ```typescript
-   const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+    const recipesHandler: (receivedRecipes: RecipeDto[]) => void
       =
-      (receivedRecipes: RecipeDto[]) => {
+      (receivedRecipes: RecipeDto[]): void => {
         this.recipes = receivedRecipes;
         console.log('My Recipes:', this.recipes);
-      };
+      }
+      ;
 ```
 
 ### 08.11 - Observable, Subscription, Data emitted, & Observer
