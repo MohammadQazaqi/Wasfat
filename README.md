@@ -1355,8 +1355,17 @@ Location:
 </ngx-datatable>
 ```
 
+### 08.17 - Shortening the getAllRecipes Even More
 
-### 08.17 - Summary
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```html
+    this.recipeAdminSvc.getAllRecipes().subscribe(recipes => this.recipes = recipes);
+```
+
+
+### 08.18 - Summary
 
 In this chapter, you learned how to:
 1. Create a backend endpoint to fetch all recipes.
