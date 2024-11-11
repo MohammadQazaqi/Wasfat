@@ -1338,6 +1338,12 @@ Location:
 ThemeSharedModule 
 ```
 
+Ngx-Datatable Link
+
+```
+https://swimlane.github.io/ngx-datatable/
+```
+
 ### 08.16 - Updating the HTML File
 
 Location:  
