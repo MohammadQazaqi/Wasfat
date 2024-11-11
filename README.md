@@ -1256,10 +1256,10 @@ Location:
 Traditional Function
 
 ```typescript
-handleRecipes(receivedRecipes: RecipeDto[]): void {
-    this.recipes = receivedRecipes;
-    console.log('My Recipes:', this.recipes);
-} 
+   handleRecipes(receivedRecipes: RecipeDto[]): void {
+       this.recipes = receivedRecipes;
+       console.log('My Recipes:', this.recipes);
+   } 
 ```
 
 Arrow Function
@@ -1274,6 +1274,20 @@ Arrow Function
 
 ### 08.11 - What is an Observable
 
+An Observable is like a stream of data that you can watch and react to.
+
+#### **Clarifying Story**
+
+A company makes an agreement with you to test their recipes and provide feedback. Every week, they send you a bundle of recipes to try. Once the bundle arrives, you eat and try dishes such as Pasta, Pizza, and Salad, and evaluate each one. After testing, you provide your feedback for the bundle as a whole: either an "Adopt" if you think the bundle is good or "Reject" if it doesn't meet the standards.  
+
+- **Observable** = The stream of weekly recipe bundles (The continuous flow of recipe bundles sent by the company every week).  
+- **Subscription** = The agreement that enables you to receive these recipe bundles.  
+- **Data emitted** = Weekly Recipe Bundle (Each emitted value is a bundle of recipes like [Pasta, Pizza, Salad]).  
+- **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
+
+
+#### **Comparison Table**
+
 | **Aspect**            | **`RecipeDto`**                      | **`RecipeDto[]`**                     | **`Observable<RecipeDto[]>`**         |
 |-----------------------|---------------------------------------|---------------------------------------|---------------------------------------|
 | **Definition**         | Represents a single recipe object    | Represents a group of `RecipeDto` objects stored sequentially | Represents a sequence that emits an array of `RecipeDto` objects, either once or multiple times asynchronously. |
@@ -1285,16 +1299,15 @@ Arrow Function
 
 ### 08.12 - Getting All Recipes to the Frontend
 
-- **`Observable`**: A stream of data that emits values over time; in this case, it emits once, but in a video or audio stream, it could emit many values.  
-- **`Observer`**: A function that listens to the Observable and processes its emitted values.  
-- **`Subscription`**: A connection that starts the data flow from the Observable to the Observer.  
-
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
 
 ```typescript
+
+   // The Observable Bundle of recipes (in our case all recipes once (Single Emit) )
    const recipesObservable: Observable<RecipeDto[]> = this.recipeAdminSvc.getAllRecipes();
 
+   // The Observer (the handling process)
    const recipesHandler: (receivedRecipes: RecipeDto[]) => void
       =
       (receivedRecipes: RecipeDto[]) => {
@@ -1302,6 +1315,7 @@ Location:
         console.log('My Recipes:', this.recipes);
       };
 
+   // The Agreement 
    recipesObservable.subscribe(recipesHandler);
 ```
 ### 08.13 - How Programers Usually Use Proxy Observables
