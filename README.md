@@ -1264,7 +1264,7 @@ Traditional Function
 
 Arrow Function
 ```typescript
-   const RecipesHandler: (receivedRecipes: RecipeDto[]) => void
+   const recipesHandler: (receivedRecipes: RecipeDto[]) => void
       =
       (receivedRecipes: RecipeDto[]) => {
         this.recipes = receivedRecipes;
@@ -1318,7 +1318,7 @@ Location:
    // The Agreement 
    recipesObservable.subscribe(recipesHandler);
 ```
-### 08.13 - How Programers Usually Use Proxy Observables
+### 08.13 - How Programmers Usually Use Proxy Observables
 
 Location:  
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
