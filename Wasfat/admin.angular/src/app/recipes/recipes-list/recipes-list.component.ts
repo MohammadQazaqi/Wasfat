@@ -8,7 +8,7 @@ import { RecipeAdminService, RecipeDto } from '@proxy/recipes';
 })
 export class RecipesListComponent implements OnInit {
 
-  recipes: RecipeDto[] = []
+  recipes: RecipeDto[] = [];
 
   constructor(private recipeAdminSvc: RecipeAdminService) {
     console.log('RecipesListComponent > constructor');
@@ -18,8 +18,19 @@ export class RecipesListComponent implements OnInit {
   ngOnInit(): void {
     console.log('RecipesListComponent > ngOnInit');
 
-    this.recipeAdminSvc.
-    
+    const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]): void => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      }
+      ;
+
+  }
+
+  handleRecipes(receivedRecipes: RecipeDto[]): void {
+    this.recipes = receivedRecipes;
+    console.log('My Recipes:', this.recipes);
   }
 
 }
