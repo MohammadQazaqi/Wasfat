@@ -1361,7 +1361,7 @@ Location:
 `src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
 
 ```html
-    this.recipeAdminSvc.getAllRecipes().subscribe(recipes => this.recipes = recipes);
+    this.recipeAdminSvc.getAllRecipes().subscribe(data => this.recipes = data);
 ```
 
 
