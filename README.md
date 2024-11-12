@@ -1137,3 +1137,242 @@ To support multiple languages, add localization entries in JSON files, like `en.
 ### 07.11 - Summary
 
 In this chapter, we created a new module for managing recipes, added components for listing and editing recipes, configured routing, and set up menu navigation. We also introduced localization to support multiple languages, enhancing the usability of the application for different users. By following these steps, you have laid the groundwork for a modular, navigable, and multilingual application.
+
+---
+
+## 08 - Building the Recipes List Component
+
+### 08.01 - What You Will Learn in This Chapter  
+In this chapter, you will learn how to fetch data from the backend and display it in a table using the **ngx-datatable** component. By the end of this chapter, you’ll have a working recipes list component that retrieves data and displays it in a tabular format.
+
+### 08.02 - Terminology  
+- **`NgOnInit`**: A lifecycle hook in Angular that is called once the component is initialized.  
+- **`Dependency Injection`**: A design pattern used in Angular to provide services or objects to components.  
+- **`Ngx-datatable`**: A powerful Angular library for building data tables.
+
+
+### 08.03 - Creating the (Get All Recipes) Endpoint
+
+Location:  
+`src`\\`Wasfat.Application`\\`Recipes`\\`RecipeAdminAppService.cs`:
+
+```csharp
+        public async Task<List<RecipeDto>> GetAllRecipesAsync()
+        {
+            var recipes = await _recipesRepository.GetListAsync();
+
+            var recipeDtos = ObjectMapper.Map<List<Recipe>, List<RecipeDto>>(recipes);
+
+            return recipeDtos;
+        }
+```
+
+
+### 08.04 - Adding the (Get All Recipes) Method to the Interface
+
+Location:  
+`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`:
+
+```csharp
+        Task<List<RecipeDto>> GetAllRecipesAsync();
+```
+
+
+### 08.05 - Generating Proxy in the Frontend
+
+Location:
+`PS `\\`Wasfat`\\`admin.angular`>
+
+```bash
+abp generate-proxy -t ng
+```
+
+
+### 08.06 - Declare The  `Recipes` Variable
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+  recipes: RecipeDto[] = [];
+```
+
+### 08.07 - Creating the Constructor if It Does Not Exist
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `RecipesListComponent`
+
+```typescript
+  constructor() {
+    console.log('RecipesListComponent > constructor');
+  }
+```
+
+Explanation: The constructor is used to initialize the component. For now, it's empty because we haven't added any dependencies.
+
+### 08.08 - Implementing `OnInit`
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```typescript
+ implements OnInit
+```
+
+```typescript
+ngOnInit(): void {
+  console.log('RecipesListComponent > ngOnInit!');
+}
+```
+**⚠️ Note :**
+> The constructor initializes the class and injects dependencies, while `ngOnInit` is used for setup logic that depends on the component being fully initialized.
+
+### 08.09 - Injecting the `RecipeAdminService`
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > `constructor` > `parameters`
+
+long version
+```typescript
+  constructor(private recipeAdminSvc: RecipeAdminService) {
+    console.log('RecipesListComponent > constructor');
+  }
+```
+
+short version
+```typescript
+private recipeAdminService: RecipeAdminService
+```
+
+### 08.10 - Arrow Functions
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+Traditional Function
+
+```typescript
+   handleRecipes(receivedRecipes: RecipeDto[]): void {
+       this.recipes = receivedRecipes;
+       console.log('My Recipes:', this.recipes);
+   } 
+```
+
+Arrow Function
+```typescript
+    const recipesHandler: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]): void => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      }
+      ;
+```
+
+### 08.11 - Observable, Subscription, Data emitted, & Observer
+
+An Observable is like a stream of data that you can watch and react to.
+
+**Clarifying Story**
+
+A company makes an agreement with you to test their recipes and provide feedback. Every week, they send you a bundle of recipes to try. Once the bundle arrives, you eat and try dishes such as Pasta, Pizza, and Salad, and evaluate each one. After testing, you provide your feedback for the bundle as a whole: either an "Adopt" if you think the bundle is good or "Reject" if it doesn't meet the standards.  
+
+- **Observable** = The stream of weekly recipe bundles (The continuous flow of recipe bundles sent by the company every week).  
+- **Subscription** = The agreement that enables you to receive these recipe bundles.  
+- **Data emitted** = Weekly Recipe Bundle (Each emitted value is a bundle of recipes like [Pasta, Pizza, Salad]).  
+- **Observer** = The process of trying and providing feedback for each recipe bundle as a whole (Handles the bundle and gives feedback: "Adopt" or "Reject").  
+
+
+### 08.12 - RecipeDto, RecipeDto[], & Observable<RecipeDto[]>
+
+**Comparison Table**
+
+| **Aspect**            | **`RecipeDto`**                      | **`RecipeDto[]`**                     | **`Observable<RecipeDto[]>`**         |
+|-----------------------|---------------------------------------|---------------------------------------|---------------------------------------|
+| **Definition**         | Represents a single recipe object    | Represents a group of `RecipeDto` objects stored sequentially | Represents a sequence that emits an array of `RecipeDto` objects, either once or multiple times asynchronously. |
+| **Purpose**            | Holds data for a single recipe       | Holds multiple `RecipeDto` objects    | Streams arrays of `RecipeDto` objects over time, supporting reactive programming. |
+| **Emit Type**          | Not applicable                       | Not applicable                        | Can emit a single array (e.g., API fetch) or multiple arrays (e.g., real-time updates). |
+| **Synchronous/Asynchronous** | Synchronous                   | Synchronous                           | Asynchronous, emits data when available. |
+| **When to Use?**       | When you need to work with a single recipe | When multiple `RecipeDto` objects need to be managed together | When recipe data needs to be fetched asynchronously or streamed over time. |
+
+
+### 08.13 - Getting All Recipes to the Frontend
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
+
+```typescript
+    const recipesObservable = this.recipeAdminSvc.getAllRecipes();
+
+    const recipesHandlerObserver: (receivedRecipes: RecipeDto[]) => void
+      =
+      (receivedRecipes: RecipeDto[]): void => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      };
+
+    recipesObservable.subscribe(recipesHandlerObserver);
+```
+### 08.14 - How Programmers Usually Use Proxy Observables
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`: > ``ngOnInit()``
+
+```typescript
+  
+    this.recipeAdminSvc.getAllRecipes().subscribe(
+      (receivedRecipes) => {
+        this.recipes = receivedRecipes;
+        console.log('My Recipes:', this.recipes);
+      }
+    );
+  
+```
+
+### 08.15 - Importing `Theme Shared Module`
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes.module.ts`: > `@NgModule` > `imports`
+
+```
+ThemeSharedModule 
+```
+
+Ngx-Datatable Link
+
+```
+https://swimlane.github.io/ngx-datatable/
+```
+
+### 08.16 - Updating the HTML File
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.html`:
+
+```html
+<ngx-datatable [rows]="recipes" default>
+  <ngx-datatable-column [name]="'ID'" prop="id"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'Name'" prop="name"></ngx-datatable-column>
+  <ngx-datatable-column [name]="'Description'" prop="description"></ngx-datatable-column>
+</ngx-datatable>
+```
+
+### 08.17 - Shortening the getAllRecipes Even More
+
+Location:  
+`src`\\`app`\\`recipes`\\`recipes-list`\\`recipes-list.component.ts`:
+
+```html
+    this.recipeAdminSvc.getAllRecipes().subscribe(data => this.recipes = data);
+```
+
+
+### 08.18 - Summary
+
+In this chapter, you learned how to:
+1. Create a backend endpoint to fetch all recipes.
+2. Add the new method to the service interface.
+3. Generate proxies for frontend usage.
+4. Retrieve and display the data in the Angular component using **ngx-datatable**.
+
+By the end of this chapter, you now have a functional recipes list component that fetches and displays data in a simple table. In future chapters, we’ll enhance this table with sorting, filtering, and pagination.
