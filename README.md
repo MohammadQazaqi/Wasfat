@@ -1391,7 +1391,6 @@ By the end of this chapter, you now have a functional recipes list component tha
 ### 09.01 - What You Will Learn in This Chapter  
 In this chapter, you will learn how to create a new recipe using a **Reactive Form** in Angular. By the end of this chapter, you will have a working Create Recipes component that allows users to submit new recipes, validates the input, and sends the data to the backend.
 
----
 
 ### 09.02 - Terminology  
 
@@ -1401,43 +1400,20 @@ In this chapter, you will learn how to create a new recipe using a **Reactive Fo
 - **Validation**: Ensures the data provided by users adheres to predefined rules before submission.
 - **Dependency Injection**: A design pattern used in Angular to provide services or objects to components.
 
----
 
-### 09.03 - Creating the (Create Recipe) Endpoint  
+### 09.03 - Checking the Backend (Create Recipe) Endpoint  
 
 **Location**:  
 `src`\\`Wasfat.Application`\\`Recipes`\\`RecipeAdminAppService.cs`
 
 ```csharp
 public override async Task<RecipeDto> CreateAsync(RecipeDto input)
-{
-    var recipe = ObjectMapper.Map<RecipeDto, Recipe>(input);
-
-    // Custom logic
-    recipe.Name = recipe.Name.Trim();
-
-    await _recipesRepository.InsertAsync(recipe, autoSave: true);
-
-    var recipeDto = ObjectMapper.Map<Recipe, RecipeDto>(recipe);
-
-    return recipeDto;
-}
 ```
 
----
 
-### 09.04 - Adding the (Create Recipe) Method to the Interface  
+### 09.04 - Checking the Corresponding  (Create Recipe) methods in the font end Proxy 
 
-**Location**:  
-`src`\\`Wasfat.Application.Contracts`\\`Recipes`\\`IRecipeAppService.cs`
-
-```csharp
-Task<RecipeDto> CreateAsync(RecipeDto input);
-```
-
----
-
-### 09.05 - Generating Proxy in the Frontend  
+If you do not see the methods in the proxy folder you will have to run this command 
 
 **Location**:  
 `PS `\\`Wasfat`\\`admin.angular`>
@@ -1446,64 +1422,108 @@ Task<RecipeDto> CreateAsync(RecipeDto input);
 abp generate-proxy -t ng
 ```
 
----
 
-
-### 09.15 - Importing `ReactiveFormsModule`
+### 09.05 - Importing ReactiveFormsModule Via Shared Module
 
 **Location**:  
-`src`\\`app`\\`recipes`\\`recipes.module.ts`: ``@NgModule`` > ``imports[]``
+`src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
 
 ```typescript
     ReactiveFormsModule
 ```
 
-### 09.06 - Declaring the `recipeForm` FormGroup  
+Do not forget to import the Shard module to the recipes module
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`recipes.module.ts`: ``@NgModule`` > ``imports[]``
+
+```typescript
+    SharedModule
+```
+
+Also remove the ThemeSharedModule from the Recipes Module as it is already available in the Shared module 
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`recipes.module.ts`: ``@NgModule`` > ``imports[]``
+
+```typescript
+    ThemeSharedModule // Remove this line 
+```
+
+
+### 09.06 Adding Angular Material 
+
+```Bash
+ng add @angular/material
+"@angular/material": "^16.2.14",
+```
+
+
+### 09.07 Importing Some Mat Modules Via shared Module
+
+**Location**:  
+`src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
+
+```typescript
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
+```
+
+   
+### 09.08 - Declaring the `recipeFormGroup` 
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
 
 ```typescript
-recipeForm: FormGroup;
+recipeFormGroup: FormGroup;
 ```
 
-Explanation:  
-The `recipeForm` property is a `FormGroup` instance that will be used to manage the form fields.
 
----
+### 09.09 Injecting important Dependencies 
 
-### 09.07 - Injecting the `RecipeAdminService`  
 
-**Location**:  
-`constructor` > `parameters`
+1. Injecting the `RecipeAdminService`
+
+    **Location**:  
+    `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `constructor` > `parameters`
+
+    ```typescript
+    private recipeAdminSvc: RecipeAdminService
+    ```
+
+2. Injecting the `FormBuilder`  
+
+    **Location**:  
+    `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `constructor` > `parameters`
+
+    ```typescript
+    private fb: FormBuilder
+    ```
+3. Injecting The `Router`  
+
+    **Location**:  
+    `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `constructor` > `parameters`
+    
+    ```typescript
+    private router: Router
+    ```
+
+
+Final Constructor with All Dependencies
 
 ```typescript
-private recipeAdminSvc: RecipeAdminService;
+  constructor(private recipeAdminSvc: RecipeAdminService,
+    private fb: FormBuilder,
+    private router: Router) {
+  }
 ```
 
-Explanation:  
-The `RecipeAdminService` is injected to handle backend interactions for creating new recipes.
-
----
-
-### 09.08 - Injecting `FormBuilder`  
+### 09.10 - Implementing `OnInit`  
 
 **Location**:  
-`constructor` > `parameters`
-
-```typescript
-private fb: FormBuilder;
-```
-
-Explanation:  
-`FormBuilder` simplifies the creation and management of form controls within the component.
-
----
-
-### 09.09 - Implementing `OnInit`  
-
-**Location**:  
-`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: ``class RecipesModule``
 
 ```typescript
 implements OnInit
@@ -1515,15 +1535,11 @@ ngOnInit(): void {
 }
 ```
 
-Explanation:  
-The `ngOnInit` lifecycle hook initializes the form and runs logic after the component is fully initialized.
 
----
-
-### 09.10 - Initializing the Form Group  
+### 09.11 - Initializing the Form Group  
 
 **Location**:  
-`ngOnInit` > `method body`
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `ngOnInit` > `method body`
 
 ```typescript
 this.recipeForm = this.fb.group({
@@ -1532,121 +1548,77 @@ this.recipeForm = this.fb.group({
 });
 ```
 
-**Lesson Title Suggestion**: *Setting Up the Recipe Form*  
-
-Explanation:  
-This step initializes the `recipeForm` with two fields:
-- **Name**: Required, with a maximum length of 100 characters.
-- **Description**: Optional, with a maximum length of 500 characters.
-
----
-
-### 09.11 - Handling Form Submission  
+### 09.12 - Sending Form Values to Backend
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
 
 ```typescript
-onSubmit(): void {
-  if (this.recipeForm.invalid) {
-    console.log('Form is invalid');
-    return;
+  createRecipe(): void {
+    this.recipeAdminSvc.create(this.recipeFormGroup.value).subscribe((response) => {
+      console.log('Recipe created successfully', response);
+      this.router.navigate(["/recipes/list"])
+    });
   }
-
-  this.recipeAdminSvc.create(this.recipeForm.value).subscribe((result) => {
-    console.log('Recipe created successfully', result);
-    this.recipeForm.reset();
-  });
-}
 ```
 
-**Lesson Title Suggestion**: *Submitting the Recipe Form*  
 
-Explanation:  
-This method:
-1. Checks if the form is valid.
-2. Sends the form data to the backend via `RecipeAdminService`.
-3. Resets the form on successful submission.
-
----
-
-### 09.12 - Updating the HTML Template  
+### 09.12 - Building Visual Part of Our Component  
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
 
 ```html
-<h1>Create a New Recipe</h1>
-
-<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="name">Recipe Name:</label>
-    <input id="name" formControlName="name" />
-    <div *ngIf="recipeForm.get('name')?.invalid && recipeForm.get('name')?.touched">
-      <small *ngIf="recipeForm.get('name')?.errors?.required">Name is required.</small>
-      <small *ngIf="recipeForm.get('name')?.errors?.maxlength">Name must be less than 100 characters.</small>
-    </div>
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-4">    
+        <!-- Cancel Button -->    
+        <button type="button" class="me-2" mat-stroked-button color="warn" (click)="cancel()">
+          Cancel
+        </button>
+        <!-- Save Button -->
+        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="createRecipe()">
+          <span>Save</span>
+        </button>          
+      </div>
+      <div class="col-4 text-center">        
+        <h1 class="fw-bold fs-5 m-0">New Recipe</h1>        
+      </div>
+      <div class="col-4 text-end">
+        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="dummyFunction()">
+          <span>Button 3</span>
+        </button>        
+        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="dummyFunction()">
+          <span>Button 3</span>
+        </button>              
+      </div>
+  </div>
   </div>
 
-  <div>
-    <label for="description">Description:</label>
-    <textarea id="description" formControlName="description"></textarea>
-    <div *ngIf="recipeForm.get('description')?.invalid && recipeForm.get('description')?.touched">
-      <small *ngIf="recipeForm.get('description')?.errors?.maxlength">Description must be less than 500 characters.</small>
-    </div>
+  <div class="card-body">
+    <form [formGroup]="recipeFormGroup" class="p-3">
+      <div class="row">
+        <div class="col-6">
+          <!-- Name Field -->
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" [autofocus]="true" placeholder="Enter recipe name">
+          </mat-form-field>
+          <!-- Description Field -->
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput style="height: 9.5rem" formControlName="description" placeholder="Enter recipe description"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-6 text-end"> <!-- Added text-end for alignment -->
+          column Right
+        </div>
+      </div>
+    </form>
   </div>
-
-  <button type="submit" [disabled]="recipeForm.invalid">Create Recipe</button>
-</form>
+</div>
 ```
-
----
-
-### 09.13 - Putting It All Together  
-
-**Final Code**:  
-`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
-
-```typescript
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RecipeAdminService } from '@proxy/recipes';
-
-@Component({
-  selector: 'app-create-recipe',
-  templateUrl: './create-recipe.component.html',
-  styleUrls: ['./create-recipe.component.scss'],
-})
-export class CreateRecipeComponent implements OnInit {
-  recipeForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private recipeAdminSvc: RecipeAdminService) {
-    console.log('CreateRecipeComponent > constructor');
-  }
-
-  ngOnInit(): void {
-    console.log('CreateRecipeComponent > ngOnInit');
-    this.recipeForm = this.fb.group({
-      name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', Validators.maxLength(500)],
-    });
-  }
-
-  onSubmit(): void {
-    if (this.recipeForm.invalid) {
-      console.log('Form is invalid');
-      return;
-    }
-
-    this.recipeAdminSvc.create(this.recipeForm.value).subscribe((result) => {
-      console.log('Recipe created successfully', result);
-      this.recipeForm.reset();
-    });
-  }
-}
-```
-
----
 
 ### 09.14 - Summary  
 
