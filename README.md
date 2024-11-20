@@ -1449,29 +1449,8 @@ Also remove the ThemeSharedModule from the Recipes Module as it is already avail
 ```typescript
     ThemeSharedModule // Remove this line 
 ```
-
-
-### 09.06 Adding Angular Material 
-
-```Bash
-ng add @angular/material
-"@angular/material": "^16.2.14",
-```
-
-
-### 09.07 Importing Some Mat Modules Via shared Module
-
-**Location**:  
-`src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
-
-```typescript
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule
-```
-
    
-### 09.08 - Declaring the `recipeFormGroup` 
+### 09.06 - Declaring the `recipeFormGroup` 
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
@@ -1481,7 +1460,7 @@ recipeFormGroup: FormGroup;
 ```
 
 
-### 09.09 Injecting important Dependencies 
+### 09.07 Injecting important Dependencies 
 
 
 1. Injecting the `RecipeAdminService`
@@ -1520,7 +1499,7 @@ Final Constructor with All Dependencies
   }
 ```
 
-### 09.10 - Implementing `OnInit`  
+### 09.08 - Implementing `OnInit`  
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: ``class RecipesModule``
@@ -1536,7 +1515,7 @@ ngOnInit(): void {
 ```
 
 
-### 09.11 - Initializing the Form Group  
+### 09.09 - Initializing the Form Group  
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `ngOnInit` > `method body`
@@ -1548,7 +1527,7 @@ this.recipeForm = this.fb.group({
 });
 ```
 
-### 09.12 - Sending Form Values to Backend
+### 09.10 - Sending Form Values to Backend
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
@@ -1562,8 +1541,26 @@ this.recipeForm = this.fb.group({
   }
 ```
 
+### 09.11 Adding Angular Material 
 
-### 09.12 - Building Visual Part of Our Component  
+```Bash
+ng add @angular/material
+"@angular/material": "^16.2.14",
+```
+
+
+### 09.12 Importing Some Mat Modules Via shared Module
+
+**Location**:  
+`src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
+
+```typescript
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
+```
+
+### 09.13 - Building Visual Part of Our Component  
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
