@@ -1527,7 +1527,19 @@ this.recipeForm = this.fb.group({
 });
 ```
 
-### 09.10 - Sending Form Values to Backend
+### 09.10 - Canceling and Navigating To Receipt List
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
+
+```typescript
+  cancel() {
+    this.router.navigate(["/recipes/list"])
+  }
+```
+
+
+### 09.11 - Sending Form Values to Backend
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
@@ -1541,7 +1553,7 @@ this.recipeForm = this.fb.group({
   }
 ```
 
-### 09.11 Adding Angular Material 
+### 09.12 Adding Angular Material 
 
 ```Bash
 ng add @angular/material
@@ -1549,7 +1561,7 @@ ng add @angular/material
 ```
 
 
-### 09.12 Importing Some Mat Modules Via shared Module
+### 09.13 Importing Some Mat Modules Via shared Module
 
 **Location**:  
 `src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
@@ -1560,7 +1572,7 @@ ng add @angular/material
     MatInputModule
 ```
 
-### 09.13 - Building Visual Part of Our Component  
+### 09.14 - Building Visual Part of Our Component  
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1617,7 +1629,7 @@ ng add @angular/material
 </div>
 ```
 
-### 09.14 - Summary  
+### 09.15 - Summary  
 
 In this chapter, you learned how to:
 1. Declare and initialize a `FormGroup` for managing form inputs.
