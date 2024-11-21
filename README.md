@@ -1397,8 +1397,7 @@ In this chapter, you will learn how to create a new recipe using a **Reactive Fo
 - **Reactive Forms**: A form-building approach in Angular where the form model is explicitly defined in the component.
 - **FormGroup**: A collection of form controls that are managed as a single unit.
 - **FormControl**: Represents a single input field within a form.
-- **Validation**: Ensures the data provided by users adheres to predefined rules before submission.
-- **Dependency Injection**: A design pattern used in Angular to provide services or objects to components.
+- **Validation**: A process that ensures the data provided by users adheres to predefined rules before submission.
 
 
 ### 09.03 - Checking the Backend (Create Recipe) Endpoint  
@@ -1572,7 +1571,7 @@ ng add @angular/material
     MatInputModule
 ```
 
-### 09.14 - Building Visual Part of Our Component  
+### 09.14 - HTML: Preparing a Bootstrap Card  
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1580,61 +1579,214 @@ ng add @angular/material
 ```html
 <div class="card">
   <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col-4">    
-        <!-- Cancel Button -->    
-        <button type="button" class="me-2" mat-stroked-button color="warn" (click)="cancel()">
-          Cancel
-        </button>
-        <!-- Save Button -->
-        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="createRecipe()">
-          <span>Save</span>
-        </button>          
-      </div>
-      <div class="col-4 text-center">        
-        <h1 class="fw-bold fs-5 m-0">New Recipe</h1>        
-      </div>
-      <div class="col-4 text-end">
-        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="dummyFunction()">
-          <span>Button 3</span>
-        </button>        
-        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="dummyFunction()">
-          <span>Button 3</span>
-        </button>              
-      </div>
+    ... header ...
   </div>
-  </div>
-
   <div class="card-body">
-    <form [formGroup]="recipeFormGroup" class="p-3">
-      <div class="row">
-        <div class="col-6">
-          <!-- Name Field -->
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" [autofocus]="true" placeholder="Enter recipe name">
-          </mat-form-field>
-          <!-- Description Field -->
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Description</mat-label>
-            <textarea matInput style="height: 9.5rem" formControlName="description" placeholder="Enter recipe description"></textarea>
-          </mat-form-field>
-        </div>
-        <div class="col-6 text-end"> <!-- Added text-end for alignment -->
-          column Right
-        </div>
-      </div>
-    </form>
+    ... body ...
   </div>
 </div>
 ```
 
-### 09.15 - Summary  
+### 09.15 - HTML: Preparing The Grid
 
-In this chapter, you learned how to:
-1. Declare and initialize a `FormGroup` for managing form inputs.
-2. Use `FormBuilder` to streamline form creation.
-3. Validate form fields to ensure data integrity.
-4. Submit the form and reset it upon successful creation of a recipe.
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
 
-Next, we’ll explore how to edit existing recipes using a similar Reactive Form approach.
+```html
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col-md-6 border">
+        left header
+      </div>
+      <div class="col-md-6 border">
+        right header
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6 border">
+        left body
+      </div>
+      <div class="col-md-6 border">
+        right body
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+### 09.16 - HTML: Adding the Cancel Button
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+```html
+        <button type="button" class="me-2" mat-stroked-button color="warn" (click)="cancel()">
+          Cancel
+        </button>
+```
+
+### 09.16 - HTML: Adding the Cancel Button
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+```html
+        <button type="button" class="me-2" mat-stroked-button color="warn" (click)="cancel()">
+          Cancel
+        </button>
+```
+
+### 09.16 - HTML: Adding the Create Button
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+```html
+        <button type="button" class="me-2" mat-stroked-button color="primary" (click)="createRecipe()">
+          Create
+        </button>
+```
+
+### 09.16 - HTML: Wrapping the card-body-row With a Form Element
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+```html
+    <form action="">      
+      <!-- here goes the: card-body-row  -->
+    </form>
+```
+
+### 09.17 - HTML: Binding the Form Group
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+Remove the `form` action and bind the `formGroup` using the following syntax:
+
+```html
+[formGroup]="recipeFormGroup"
+```
+
+The updated form should look something like this:
+
+```html
+    <form action="">
+      <div class="row">
+        <div class="col-md-6 border">
+          <!-- left body -->
+        </div>
+        <div class="col-md-6 border">
+          <!-- right body -->
+        </div>
+      </div>
+    </form>
+``` 
+
+### 09.18 - HTML 3: Adding the Reactive Form Fields
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+First: add the `name` Input field 
+```html
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" placeholder="Enter recipe name">
+          </mat-form-field>
+```
+
+Second: add the `name` `textarea` field 
+```html
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Enter recipe description"></textarea>
+          </mat-form-field>
+```
+
+**💡 Reference :**
+> **Search for**: `angular material input`  
+> **The Google result page at the time of the recording** : [Angular Material Input](https://material.angular.io/components/input/overview)
+
+
+### 09.19 - Refactoring `buildForm`
+
+Use `Ctrl+DOT` in VS Code to quickly refactor the form initialization logic into a separate method.
+
+Updated code:
+
+```typescript
+ngOnInit(): void {
+  this.buildForm();
+}
+
+private buildForm(): void {
+  this.recipeFormGroup = this.fb.group({
+    name: [''],
+    description: ['']
+  });
+}
+```
+
+### 09.20 - Adding Form Validation Rules  
+
+**Step 1: Add Validators for the `name` Field** 
+   
+  **Location**:  
+  `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `buildForm`   
+  ```typescript
+  [Validators.required, Validators.minLength(3)]
+  ```
+
+  Update code
+  ```typescript
+  private buildForm() {
+    this.recipeFormGroup = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['']
+    });
+  }
+  ```
+
+
+**Step 2: Prevent Recipe Creation if the Form is Invalid**  
+
+  ```typescript
+    if (this.recipeFormGroup.invalid) {
+      alert("Some fields are not valid.");
+      return;
+    }
+  ```
+
+   Update Code  
+   **Location**:  
+   `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`   
+
+  ```typescript
+  createRecipe(): void {
+    if (this.recipeFormGroup.invalid) {
+      alert("Some fields are not valid.");
+      return;
+    }
+    this.recipeAdminSvc.create(this.recipeFormGroup.value).subscribe((response) => {
+      console.log('Recipe created successfully', response);
+      this.router.navigate(["/recipes/list"])
+    });
+  }
+  ```   
+
+### 09.21 - Summary  
+
+In this chapter, we learned how to build a Create Recipes Component in Angular.  
+
+  - We started by verifying the `CreateAsync` backend endpoint and ensuring the proxy methods were available in the Angular application by generating the proxy using the `abp generate-proxy` command.  
+  - Next, we configured the shared module to include `ReactiveFormsModule` and Angular Material components, ensuring all necessary imports were in place.  
+  - Using a `FormGroup` and `FormBuilder`, we initialized the recipe form, structured it, and added validation rules to enforce proper input.  
+  - We designed a responsive UI with Bootstrap and Angular Material, including form fields for recipe name and description, wrapped in a visually appealing card layout.  
+  - Finally, we implemented the `createRecipe` method to validate the form, submit the data to the backend, and navigate to the recipe list upon successful creation.  
+
+This chapter provided a step-by-step guide to creating a polished recipe creation feature, setting the stage for editing existing recipes in the next chapter.
