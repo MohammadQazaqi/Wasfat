@@ -1386,7 +1386,9 @@ By the end of this chapter, you now have a functional recipes list component tha
 
 ---
 
-## 09 - Building the Create Recipes Component
+## 09 - Building the Create Recipe Component
+
+        Building the Recipes List Component
 
 ### 09.01 - What You Will Learn in This Chapter  
 In this chapter, you will learn how to create a new recipe using a **Reactive Form** in Angular. By the end of this chapter, you will have a working Create Recipes component that allows users to submit new recipes, validates the input, and sends the data to the backend.
@@ -1400,7 +1402,8 @@ In this chapter, you will learn how to create a new recipe using a **Reactive Fo
 - **Validation**: A process that ensures the data provided by users adheres to predefined rules before submission.
 
 
-### 09.03 - Checking the Backend (Create Recipe) Endpoint  
+### 09.03 - Verifying the Backend Create Recipe Endpoint
+
 
 **Location**:  
 `src`\\`Wasfat.Application`\\`Recipes`\\`RecipeAdminAppService.cs`
@@ -1410,7 +1413,7 @@ public override async Task<RecipeDto> CreateAsync(RecipeDto input)
 ```
 
 
-### 09.04 - Checking the Corresponding  (Create Recipe) methods in the font end Proxy 
+### 09.04 - Verifying the Frontend Proxy for Create Recipe
 
 If you do not see the methods in the proxy folder you will have to run this command 
 
@@ -1422,7 +1425,7 @@ abp generate-proxy -t ng
 ```
 
 
-### 09.05 - Importing ReactiveFormsModule Via Shared Module
+### 09.05 - Importing ReactiveFormsModule Via SharedModule
 
 **Location**:  
 `src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
@@ -1459,7 +1462,7 @@ recipeFormGroup: FormGroup;
 ```
 
 
-### 09.07 Injecting important Dependencies 
+### 09.07 Injecting Important Dependencies
 
 
 1. Injecting the `RecipeAdminService`
@@ -1498,7 +1501,7 @@ Final Constructor with All Dependencies
   }
 ```
 
-### 09.08 - Implementing `OnInit`  
+### 09.08 - Implementing `OnInit`
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: ``class RecipesModule``
@@ -1514,19 +1517,19 @@ ngOnInit(): void {
 ```
 
 
-### 09.09 - Initializing the Form Group  
+### 09.09 - Building the Form
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `ngOnInit` > `method body`
 
 ```typescript
 this.recipeForm = this.fb.group({
-  name: ['', [Validators.required, Validators.maxLength(100)]],
-  description: ['', Validators.maxLength(500)],
+  name: [''],
+  description: [''],
 });
 ```
 
-### 09.10 - Canceling and Navigating To Receipt List
+### 09.10 - Canceling and Navigating to Recipes List
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
@@ -1538,7 +1541,7 @@ this.recipeForm = this.fb.group({
 ```
 
 
-### 09.11 - Sending Form Values to Backend
+### 09.11 - Sending Form Values to the Backend
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
@@ -1552,7 +1555,7 @@ this.recipeForm = this.fb.group({
   }
 ```
 
-### 09.12 Adding Angular Material 
+### 09.12 Adding Angular Material
 
 ```Bash
 ng add @angular/material
@@ -1571,7 +1574,7 @@ ng add @angular/material
     MatInputModule
 ```
 
-### 09.14 - HTML: Preparing a Bootstrap Card  
+### 09.14 - HTML: Preparing a Bootstrap Card
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1628,18 +1631,7 @@ ng add @angular/material
         </button>
 ```
 
-### 09.16 - HTML: Adding the Cancel Button
-
-**Location**:  
-`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
-
-```html
-        <button type="button" class="me-2" mat-stroked-button color="warn" (click)="cancel()">
-          Cancel
-        </button>
-```
-
-### 09.16 - HTML: Adding the Create Button
+### 09.17 - HTML: Adding the Create Button
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1650,7 +1642,7 @@ ng add @angular/material
         </button>
 ```
 
-### 09.16 - HTML: Wrapping the card-body-row With a Form Element
+### 09.18 - HTML: Wrapping the ``Card Body Row`` with a Form Element
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1661,7 +1653,7 @@ ng add @angular/material
     </form>
 ```
 
-### 09.17 - HTML: Binding the Form Group
+### 09.19 - HTML: Binding the Form Group
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1687,7 +1679,7 @@ The updated form should look something like this:
     </form>
 ``` 
 
-### 09.18 - HTML 3: Adding the Reactive Form Fields
+### 09.20 - HTML 3: Adding the Reactive Form Fields
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
@@ -1713,7 +1705,7 @@ Second: add the `name` `textarea` field
 > **The Google result page at the time of the recording** : [Angular Material Input](https://material.angular.io/components/input/overview)
 
 
-### 09.19 - Refactoring `buildForm`
+### 09.21 - Refactoring `buildForm`
 
 Use `Ctrl+DOT` in VS Code to quickly refactor the form initialization logic into a separate method.
 
@@ -1732,7 +1724,7 @@ private buildForm(): void {
 }
 ```
 
-### 09.20 - Adding Form Validation Rules  
+### 09.22 - Adding Form Validation Rules  
 
 **Step 1: Add Validators for the `name` Field** 
    
@@ -1779,7 +1771,7 @@ private buildForm(): void {
   }
   ```   
 
-### 09.21 - Summary  
+### 09.23 - Summary  
 
 In this chapter, we learned how to build a Create Recipes Component in Angular.  
 
