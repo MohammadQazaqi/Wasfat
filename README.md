@@ -1537,7 +1537,7 @@ this.recipeForm = this.fb.group({
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`
 
 ```typescript
-  cancel() {
+  cancel(): void {
     this.router.navigate(["/recipes/list"])
   }
 ```
