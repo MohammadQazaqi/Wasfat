@@ -1525,10 +1525,10 @@ ngOnInit(): void {
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.ts`: `ngOnInit` > `method body`
 
 ```typescript
-this.recipeForm = this.fb.group({
-  name: [''],
-  description: [''],
-});
+    this.recipeFormGroup = this.fb.group({
+      name: [''],
+      description: ['']
+    });
 ```
 
 ### 09.10 - Canceling and Navigating to Recipes List
@@ -1538,7 +1538,7 @@ this.recipeForm = this.fb.group({
 
 ```typescript
   cancel(): void {
-    this.router.navigate(["/recipes/list"])
+    this.router.navigate(["/recipes/list"]);
   }
 ```
 
@@ -1552,18 +1552,23 @@ this.recipeForm = this.fb.group({
   createRecipe(): void {
     this.recipeAdminSvc.create(this.recipeFormGroup.value).subscribe((response) => {
       console.log('Recipe created successfully', response);
-      this.router.navigate(["/recipes/list"])
+      this.router.navigate(["/recipes/list"]);
     });
   }
 ```
 
 ### 09.12 Adding Angular Material
 
+Run the following command in the Power Shell (PS) terminal 
+
 ```Bash
-ng add @angular/material
-"@angular/material": "^16.2.14",
+ng add @angular/material@16.2.14
 ```
 
+Check the changes in Angular.json
+```Bash
+"@angular/material": "^16.2.14",
+```
 
 ### 09.13 Importing Some Mat Modules via shared Module
 
