@@ -1570,7 +1570,7 @@ Check the changes in Angular.json
 "@angular/material": "^16.2.14",
 ```
 
-### 09.13 Importing Some Mat Modules via shared Module
+### 09.13 Importing the Needed Material Modules
 
 **Location**:  
 `src`\\`app`\\`shared`\\`shared.module.ts`: `@NgModule` > `imports[]` & `Export[]`
