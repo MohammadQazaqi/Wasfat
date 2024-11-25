@@ -1607,20 +1607,20 @@ Check the changes in Angular.json
   <div class="card-header">
     <div class="row">
       <div class="col-md-6 border">
-        left header
+        Left card header
       </div>
       <div class="col-md-6 border">
-        right header
+        right card header
       </div>
     </div>
   </div>
   <div class="card-body">
     <div class="row">
       <div class="col-md-6 border">
-        left body
+        Left card body
       </div>
       <div class="col-md-6 border">
-        right body
+        right card body
       </div>
     </div>
   </div>
