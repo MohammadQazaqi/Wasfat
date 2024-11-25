@@ -1395,8 +1395,8 @@ In this chapter, you will learn how to create a new recipe using a **Reactive Fo
 ### 09.02 - Terminology  
 
 - **Reactive Forms**: A form-building approach in Angular where the form model is explicitly defined in the component.
-- **FormGroup**: A collection of form controls that are managed as a single unit.
 - **FormControl**: Represents a single input field within a form.
+- **FormGroup**: A collection of form controls that are managed as a single unit.
 - **Validation**: A process that ensures the data provided by users adheres to predefined rules before submission.
 
 
