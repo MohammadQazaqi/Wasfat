@@ -1699,7 +1699,7 @@ First: add the `name` Input field
           </mat-form-field>
 ```
 
-Second: add the `name` `textarea` field 
+Second: add the `description` `textarea` field 
 ```html
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Description</mat-label>
