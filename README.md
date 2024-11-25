@@ -1686,24 +1686,15 @@ The updated form should look something like this:
     </form>
 ``` 
 
-### 09.20 - HTML: Adding the Reactive Form Fields
+### 09.20 - HTML: Adding the Name Form Fields
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
 
-First: add the `name` Input field 
 ```html
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput formControlName="name" placeholder="Enter recipe name">
-          </mat-form-field>
-```
-
-Second: add the `description` `textarea` field 
-```html
-          <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="description" placeholder="Enter recipe description"></textarea>
           </mat-form-field>
 ```
 
@@ -1712,7 +1703,19 @@ Second: add the `description` `textarea` field
 > **The Google result page at the time of the recording** : [Angular Material Input](https://material.angular.io/components/input/overview)
 
 
-### 09.21 - Refactoring `buildForm`
+### 09.21 - HTML: Adding the Description Form Field
+
+**Location**:  
+`src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
+
+```html
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Enter recipe description"></textarea>
+          </mat-form-field>
+```
+
+### 09.22 - Refactoring `buildForm`
 
 Use `Ctrl+DOT` in VS Code to quickly refactor the form initialization logic into a separate method.
 
@@ -1731,7 +1734,7 @@ private buildForm(): void {
 }
 ```
 
-### 09.22 - Adding Form Validation Rules
+### 09.23 - Adding Form Validation Rules
 
 **Step 1: Add Validators for the `name` Field** 
    
@@ -1778,7 +1781,7 @@ private buildForm(): void {
   }
   ```   
 
-### 09.23 - Summary  
+### 09.24 - Summary  
 
 In this chapter, we learned how to build a Create Recipes Component in Angular.  
 
