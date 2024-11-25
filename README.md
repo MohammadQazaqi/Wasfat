@@ -1785,7 +1785,11 @@ private buildForm(): void {
   }
   ```   
 
-### 09.25 - Summary  
+### 09.25 - Removing the Bordered Guides  
+
+Press **Ctrl+H** to search for "border" and replace it with an empty string to remove the border around the columns in our Bootstrap grid.
+
+### 09.26 - Summary  
 
 In this chapter, we learned how to build a Create Recipes Component in Angular.  
 
