@@ -1674,7 +1674,7 @@ Remove the `form` action and bind the `formGroup` using the following syntax:
 The updated form should look something like this:
 
 ```html
-    <form action="">
+    <form [formGroup]="recipeFormGroup">
       <div class="row">
         <div class="col-md-6 border">
           <!-- left body -->
