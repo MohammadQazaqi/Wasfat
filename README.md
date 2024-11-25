@@ -1703,7 +1703,7 @@ The updated form should look something like this:
 > **The Google result page at the time of the recording** : [Angular Material Input](https://material.angular.io/components/input/overview)
 
 
-### 09.21 - HTML: Adding the Description Form Field
+### 09.21 - HTML: Adding the Description `textarea` Form Field
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
