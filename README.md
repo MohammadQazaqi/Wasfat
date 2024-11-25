@@ -1715,7 +1715,11 @@ The updated form should look something like this:
           </mat-form-field>
 ```
 
-### 09.22 - Refactoring `buildForm`
+### 09.22 - Testing Our Form
+
+At this stage, the form should be ready to use. You can test it by interacting with the form and even debug it in the backend by placing a breakpoint in the `CreateAsync` endpoint function.
+
+### 09.23 - Refactoring `buildForm`
 
 Use `Ctrl+DOT` in VS Code to quickly refactor the form initialization logic into a separate method.
 
@@ -1734,7 +1738,7 @@ private buildForm(): void {
 }
 ```
 
-### 09.23 - Adding Form Validation Rules
+### 09.24 - Adding Form Validation Rules
 
 **Step 1: Add Validators for the `name` Field** 
    
@@ -1781,7 +1785,7 @@ private buildForm(): void {
   }
   ```   
 
-### 09.24 - Summary  
+### 09.25 - Summary  
 
 In this chapter, we learned how to build a Create Recipes Component in Angular.  
 
