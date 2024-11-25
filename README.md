@@ -1388,8 +1388,6 @@ By the end of this chapter, you now have a functional recipes list component tha
 
 ## 09 - Building the Create Recipe Component
 
-        Building the Recipes List Component
-
 ### 09.01 - What You Will Learn in This Chapter  
 In this chapter, you will learn how to create a new recipe using a **Reactive Form** in Angular. By the end of this chapter, you will have a working Create Recipes component that allows users to submit new recipes, validates the input, and sends the data to the backend.
 
