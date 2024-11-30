@@ -1394,7 +1394,7 @@ In this chapter, you will learn how to create a new recipe using a **Reactive Fo
 
 ### 09.02 - Terminology  
 
-- **Reactive Forms**: A form-building approach in Angular where the form model is explicitly defined in the component.
+- **Reactive Forms** is a module in Angular that helps build forms that ensure automatic synchronization between the user interface (UI) layer (basically the HTML) and the logic layer (basically the TypeScript). Changes made by users in the UI are immediately synchronized behind the senses with the form data that exists in the TypeScript side, and vice versa. This dynamic synchronization makes state management very easy and robust. For example, if we have a cart form containing multiple items, and the user changes the quantity of an item in the cart, this UI change is automatically reflected in the form data on the TypeScript side. This updated data can then be easily used to trigger an update to the cart's subtotal in the TypeScript logic. In turn, the change in the subtotal on the data side is automatically synchronized with the UI, allowing the user to see an immediate update to the cart total.
 - **FormControl**: Represents a single input field within a form.
 - **FormGroup**: A collection of form controls that are managed as a single unit.
 - **Validation**: A process that ensures the data provided by users adheres to predefined rules before submission.
@@ -1511,9 +1511,9 @@ implements OnInit
 ```
 
 ```typescript
-ngOnInit(): void {
-  console.log('CreateRecipeComponent > ngOnInit');
-}
+  ngOnInit(): void {
+    console.log('CrudRecipeComponent > ngOnInit');
+  }
 ```
 
 
@@ -1587,12 +1587,13 @@ Check the changes in Angular.json
 ```html
 <div class="card">
   <div class="card-header">
-    ... header ...
+    this is the card header
   </div>
   <div class="card-body">
-    ... body ...
+    this is the card body
   </div>
 </div>
+
 ```
 
 ### 09.15 - HTML: Preparing the Grid
@@ -1684,7 +1685,7 @@ The updated form should look something like this:
     </form>
 ``` 
 
-### 09.20 - HTML: Adding the Name Form Fields
+### 09.20 - HTML: Adding the ``Name`` Form Fields
 
 **Location**:  
 `src`\\`app`\\`recipes`\\`create-recipe`\\`create-recipe.component.html`
